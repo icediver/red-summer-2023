@@ -6,7 +6,7 @@ const ShipmentsTable: FC = () => {
     return <div>
         {
             shipmentsData.map((items, index) =>
-                <MenuItem {...items} />
+                <MenuItem key={items['Shipment number']} {...items} />
             )
         }
     </div>

@@ -16,8 +16,8 @@ const Shipments: FC = () => {
                 <Button className={'w-20 !py-2'} variant='second'>Departure</Button>
             </div>
             <div className={styles.rightSide}>
-                <SelectFilters title='Sort by:' options={sortBy} variant='second' />
-                <SelectFilters title='Arival date:' options={sortBy} variant='second' />
+                <SelectFilters title='Sort by:' options={sortBy} variant='second' instanceId='sort-by-filter' />
+                <SelectFilters title='Arival date:' options={sortBy} variant='second' instanceId='arival-date-filter' />
             </div></div>
         <ShipmentsTableHeader />
         <ShipmentsTable />

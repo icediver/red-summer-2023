@@ -10,8 +10,8 @@ const SearchTracking: FC = () => {
     return <div className={styles.searchContainer}>
         <FiSearch size={22} />
         <div className={styles.select}>
-            <SelectFilters options={cities} title={'City: '} />
-            <SelectFilters options={departments} title={'Department: '} />
+            <SelectFilters options={cities} title={'City: '} instanceId='cities-filter' />
+            <SelectFilters options={departments} title={'Department: '} instanceId='departments-filter' />
             <DynamicClock />
         </div>
         <input className={styles.search} placeholder='Search by tracking number' />

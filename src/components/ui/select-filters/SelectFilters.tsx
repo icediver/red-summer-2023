@@ -11,10 +11,11 @@ import { Options } from 'sass';
 interface ISelectFilters {
     options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
     title: string
-    variant: 'first' | 'second'
+    variant?: 'first' | 'second'
+    instanceId: string
 }
 
-const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first' }) => {
+const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first', instanceId }) => {
     const bg = variant === 'first' ? '!bg-main-bg' : '!bg-white'
     return <div className={styles.select}>
         <Select options={options}
@@ -27,6 +28,7 @@ const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first' }
                     </components.Control>
                 )
             }}
+            instanceId={instanceId}
             classNames={{
                 control: ({ isFocused, menuIsOpen }) =>
                     clsx(bg, '!text-black-inactive',
