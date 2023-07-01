@@ -1,0 +1,16 @@
+.logo {
+    @apply flex flex-row justify-start items-center ;
+    > svg {
+        @apply inline-block w-10 h-10 mt-1;
+    }
+    > div {
+        @apply pl-1;
+        > span {
+            @apply text-xl text-primary font-semibold;
+
+    }
+        > div {
+            @apply text-xs text-black-inactive -my-1;
+        }
+    } 
+}

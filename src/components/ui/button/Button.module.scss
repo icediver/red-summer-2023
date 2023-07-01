@@ -1,0 +1,9 @@
+.button {
+    @apply  rounded-md py-4  text-xs flex justify-center items-center gap-2;
+    }
+.first {
+        @apply bg-primary text-white;
+    }
+.second {
+    @apply bg-primary/20 text-primary;
+}

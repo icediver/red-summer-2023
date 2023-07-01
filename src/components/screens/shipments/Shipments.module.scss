@@ -1,0 +1,15 @@
+.shipments {
+    @apply w-full pl-8 pr-8 py-6; 
+     .shipmentsHeader {
+    @apply flex justify-between; 
+    .leftSide {
+        > span {
+            @apply text-xl mr-3;
+        }
+        @apply flex flex-row justify-start gap-2 items-center ;
+    }
+   .rightSide {
+       @apply flex gap-2; 
+   } 
+   }
+}

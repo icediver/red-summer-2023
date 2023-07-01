@@ -1,0 +1,20 @@
+
+.dashboardMenu {
+    @apply flex flex-col text-black-inactive pr-3;
+    .menuItem {
+        @apply flex px-4 flex-row items-center justify-between my-4;
+        button > svg {
+            @apply inline-block mr-3;
+        }
+        .notification{
+            @apply w-8 h-6 bg-error-color rounded text-center text-white;
+        } 
+    }
+    .active {
+        @apply bg-main-bg border-l-2 border-primary rounded-r-md; 
+         button > svg {
+            @apply fill-primary;
+        }
+
+    }
+}
