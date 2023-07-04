@@ -1,0 +1,17 @@
+
+    .menuItem {
+        @apply flex px-4 w-full  items-end justify-between my-4 py-1;
+        div > svg {
+            @apply inline-block mr-3;
+        }
+        .notification{
+            @apply w-8 h-6 bg-error-color rounded text-center text-white;
+        } 
+    }
+    .active {
+        @apply bg-main-bg border-l-2 border-primary rounded-r-md; 
+         div > svg {
+            @apply fill-primary;
+        }
+
+    }
