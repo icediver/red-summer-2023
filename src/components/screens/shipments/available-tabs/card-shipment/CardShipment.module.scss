@@ -1,0 +1,91 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 100;
+	}
+}
+.card {
+    @apply w-[620px] h-[300px] bg-white rounded p-6;
+     animation: fadeIn 5.5s easy-in-out;
+
+    .header {
+        @apply flex flex-row py-3 justify-between items-center;
+        .leftSideHeader {
+            @apply flex flex-row gap-2 items-center;
+            .route {
+                @apply font-semibold;
+            }
+            .departure {
+                @apply text-black-inactive text-xs;
+            }
+        }
+        .percent {
+            @apply text-2xl text-error-color;
+        }
+
+    }
+    .main {
+        @apply flex flex-row ;
+        .leftColumn {
+             @apply w-[250px] pt-3;
+             .title {
+                 @apply text-black-inactive text-xs py-3;
+             }
+        }
+    
+    .rightColumn {
+
+        .truck {
+            @apply relative w-[350px] h-[175px];
+            .progress {
+                @apply absolute w-[248px]  h-[116px] bg-black-inactive/30 top-1 left-24;
+                .total {
+                    @apply  h-full left-0;
+                    animation: right-animate 1s ease ;
+                }
+                    @keyframes right-animate {
+                        from {
+                            clip-path: inset(0   100% 0 0);
+                            opacity: 0;
+                        }
+                        to {
+                            clip-path: inset(0 0 0 0);
+                            opacity: 1;
+                        }
+                    }
+                   
+            }
+            
+        }
+    }
+}
+}
+.red {
+                    background: repeating-linear-gradient(
+                                          -60deg,
+                                          #D95666,
+                                          #D95666 15px,
+                                          #D85060 15px,
+                                          #D85060 28px
+                    );
+               } 
+.yellow {
+                    background: repeating-linear-gradient(
+                                          -60deg,
+                                          #EDA336,
+                                          #EDA336 15px,
+                                          #E49C35 15px,
+                                          #E49C35 28px
+                    );
+               } 
+.green {
+                    background: repeating-linear-gradient(
+                                          -60deg,
+                                          #53C57B,
+                                          #53C57B 15px,
+                                          #3CBA66 15px,
+                                          #3CBA66 28px
+                    );
+               } 

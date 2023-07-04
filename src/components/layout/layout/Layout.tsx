@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useState } from 'react'
 import styles from './Layout.module.scss'
 import Dashboard from '../dashboard/Dashboard'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import cn from 'clsx'
+import cn, { clsx } from 'clsx'
 import Header from './header/Header'
 
 
@@ -27,9 +27,9 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
                     </button>
                 </div>
 
-                <div className={isDashboardOpen ? 'w-full' : 'w-4/5'}>
+                <div className={clsx(styles.rightSide, isDashboardOpen ? 'w-full' : 'w-4/5')}>
                     <Header />
-                    {children}
+                    <div className={styles.children}>{children}</div>
                 </div>
             </div>
         </div>
