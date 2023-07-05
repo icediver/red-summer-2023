@@ -4,6 +4,12 @@
         @apply  h-full bg-border-color p-3  rounded-3xl;
         .content {
             @apply flex h-full bg-main-bg rounded-3xl;
+            .rightSide {
+                .children {
+                    @apply overflow-x-hidden h-[750px] bg-main-bg; 
+                }
+            }
+
         .collapseButton{
             @apply w-10 h-10 absolute left-[20%] top-10 ml-4 -translate-x-1/2 bg-main-bg rounded-full p-1.5;
             transition: all 0.5s ease-in-out;
