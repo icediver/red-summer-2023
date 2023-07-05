@@ -28,7 +28,7 @@ const Layout: FC<PropsWithChildren<unknown>> = ({ children }) => {
                 </div>
 
                 <div className={clsx(styles.rightSide, isDashboardOpen ? 'w-full' : 'w-4/5')}>
-                    <Header />
+
                     <div className={styles.children}>{children}</div>
                 </div>
             </div>

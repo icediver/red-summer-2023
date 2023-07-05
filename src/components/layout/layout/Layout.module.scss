@@ -6,7 +6,7 @@
             @apply flex h-full bg-main-bg rounded-3xl;
             .rightSide {
                 .children {
-                    @apply overflow-x-hidden h-[750px] bg-main-bg; 
+                    @apply overflow-x-hidden h-full bg-main-bg; 
                 }
             }
 
