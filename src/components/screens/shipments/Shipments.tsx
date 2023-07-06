@@ -8,7 +8,7 @@ import AvailableTabs from "./available-tabs/AvailableTabs";
 import clsx from "clsx";
 import { useSearch } from "@/hooks/useSearch";
 import SearchTracking from "@/layout/layout/header/search-tracking/SearchTracking";
-import { getArivalDate, getSelectOptions, sortShipmentData } from "@/shared/getArivalDate";
+import { getArivalDate, getSelectOptions, getSortKeys, sortArrival, sortShipmentData } from "@/shared/getArivalDate";
 import { OnChangeValue } from "react-select";
 
 
@@ -19,17 +19,28 @@ const Shipments: FC = () => {
     const [activeTab, setActiveTab] = useState<number>(1)
     const dates = getArivalDate(data || [])
 
+    const sort = getSortKeys(data || [])
+
     useEffect(() => { if (data) setShipments(data) }, [data])
+
+
 
     function handleChangeDate(date: OnChangeValue<IOption, boolean>) {
         if (!data) return
-        const shipmentsOfCurrentDate = data.filter(el => el["Arrival date"].includes((date as IOption).value))
+        const shipmentsOfCurrentDate = data.filter(el => el["Arrival date"].includes((date as IOption)?.value || ''))
         setShipments(shipmentsOfCurrentDate)
+
     }
 
     function handleSortBy(sortBy: OnChangeValue<IOption, boolean>) {
-        if (data) console.log(sortShipmentData(data, { value: 'Total weight, kg', label: 'Total weight, kg' }))
+        if (!data) return
+        // const sort = sortShipmentData(data, sortBy as IOption)
+        // setShipments([...sort])
+        const sort = sortArrival(data).sortData(sortBy as IOption).newData
+        setShipments([...sort])
+
     }
+
 
 
     return <div className={styles.shipments}>
@@ -56,10 +67,11 @@ const Shipments: FC = () => {
             <div className={styles.rightSide}>
                 <SelectFilters
                     title='Sort by:'
-                    options={sortBy}
+                    options={getSelectOptions(sort)}
                     variant='second'
                     instanceId='sort-by-filter'
                     handleChange={handleSortBy}
+
                 />
 
                 <SelectFilters

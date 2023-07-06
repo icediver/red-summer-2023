@@ -204,7 +204,7 @@ export const shipmentsAvailable: ICardShipment[] = [
     {
         route: 'Barcelona-Valencia',
         departure: '15 Jun, 2:00 PM',
-        available: { title: 'Available, kg', value: 20 },
+        available: { title: 'Available, kg', value: 180 },
         number: { title: 'Shipment number', value: 'V435322' },
         truck: { title: 'Truck', value: 'Iveco 80E18' },
         capacity: 200
@@ -230,7 +230,7 @@ export const shipmentsAvailable: ICardShipment[] = [
     {
         route: 'Barcelona-Cordoba',
         departure: '15 Jun, 10:00 PM',
-        available: { title: 'Available, kg', value: 160 },
+        available: { title: 'Available, kg', value: 60 },
         number: { title: 'Shipment number', value: 'V998426' },
         truck: { title: 'Truck', value: 'Iveco 80E21' },
         capacity: 200

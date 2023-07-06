@@ -23,7 +23,7 @@ const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first', 
     return <div className={styles.select}>
         <Select options={options}
             // components={{ Control({ title: title }) }}
-
+            isClearable
             onChange={handleChange}
             components={{
                 Control: ({ children, ...rest }) => (

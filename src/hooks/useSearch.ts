@@ -25,11 +25,12 @@ export const useSearch = () => {
     }
 
     const handleChangeCity = (newValue: OnChangeValue<IOption, boolean>) => {
-        setCity((newValue as IOption).value)
+        const city = (newValue as IOption)?.value || ''
+        setCity(city)
     }
 
     const handleChangeDepartment = (newValue: OnChangeValue<IOption, boolean>) => {
-        setDepartment((newValue as IOption).value)
+        setDepartment((newValue as IOption)?.value)
     }
 
     return { isSuccess, handleSearch, handleChangeCity, handleChangeDepartment, data, searchTerm }
