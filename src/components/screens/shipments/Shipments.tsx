@@ -1,18 +1,50 @@
-import { FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import styles from './Shipments.module.scss';
-import Button from '@/ui/button/Button'
 import SelectFilters from '@/ui/select-filters/SelectFilters'
-import { sortBy } from '@/data/cities'
+import { IOption, IShipmentData, sortBy } from '@/data/cities'
 import ShipmentsTableHeader from './shipments-header/ShipmentsHeader'
 import ShipmentsTable from './shipments-table/ShipmentsTable'
 import AvailableTabs from "./available-tabs/AvailableTabs";
 import clsx from "clsx";
+import { useSearch } from "@/hooks/useSearch";
+import SearchTracking from "@/layout/layout/header/search-tracking/SearchTracking";
+import { getArivalDate, getSelectOptions, getSortKeys, sortArrival, sortShipmentData } from "@/shared/getArivalDate";
+import { OnChangeValue } from "react-select";
 
 
 
 const Shipments: FC = () => {
-    const [activeTab, setActiveTab] = useState<number>(2)
+    const { isSuccess, handleSearch, data, searchTerm, handleChangeCity, handleChangeDepartment } = useSearch()
+    const [shipments, setShipments] = useState<IShipmentData[]>([])
+    const [activeTab, setActiveTab] = useState<number>(1)
+    const dates = getArivalDate(data || [])
+
+    const sort = getSortKeys(data || [])
+
+    useEffect(() => { if (data) setShipments(data) }, [data])
+
+
+
+    function handleChangeDate(date: OnChangeValue<IOption, boolean>) {
+        if (!data) return
+        const shipmentsOfCurrentDate = data.filter(el => el["Arrival date"].includes((date as IOption)?.value || ''))
+        setShipments(shipmentsOfCurrentDate)
+
+    }
+
+    function handleSortBy(sortBy: OnChangeValue<IOption, boolean>) {
+        if (!data) return
+        // const sort = sortShipmentData(data, sortBy as IOption)
+        // setShipments([...sort])
+        const sort = sortArrival(data).sortData(sortBy as IOption).newData
+        setShipments([...sort])
+
+    }
+
+
+
     return <div className={styles.shipments}>
+        <SearchTracking searchField={{ searchTerm, handleSearch }} handleChangeCity={handleChangeCity} handleChangeDepartment={handleChangeDepartment} />
         <div className={styles.shipmentsHeader}>
             <div className={styles.leftSide}>
                 <span>Shipments</span>
@@ -20,7 +52,7 @@ const Shipments: FC = () => {
                     onClick={() => setActiveTab(1)}
                     className={clsx(styles.button, {
                         [styles.activeTab]: activeTab === 1
-                    })}>Arrival(20)</button>
+                    })}>Arrival({data?.length})</button>
                 <button
                     onClick={() => setActiveTab(2)}
                     className={clsx(styles.button, {
@@ -33,15 +65,28 @@ const Shipments: FC = () => {
                     })}>Departure(32)</button>
             </div>
             <div className={styles.rightSide}>
-                <SelectFilters title='Sort by:' options={sortBy} variant='second' instanceId='sort-by-filter' />
-                <SelectFilters title='Arival date:' options={sortBy} variant='second' instanceId='arival-date-filter' />
+                <SelectFilters
+                    title='Sort by:'
+                    options={getSelectOptions(sort)}
+                    variant='second'
+                    instanceId='sort-by-filter'
+                    handleChange={handleSortBy}
+
+                />
+
+                <SelectFilters
+                    title='Arival date:'
+                    options={getSelectOptions(dates)}
+                    variant='second'
+                    instanceId='arival-date-filter'
+                    handleChange={handleChangeDate} />
             </div>
         </div>
         {
             activeTab === 1 ? <>
 
                 <ShipmentsTableHeader />
-                <ShipmentsTable />
+                <ShipmentsTable shipments={shipments} />
             </> : activeTab === 2 ? <AvailableTabs /> : <></>
         }
 

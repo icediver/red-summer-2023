@@ -6,6 +6,7 @@ import Shipments from '../shipments/Shipments'
 const Home = () => {
     return <Layout>
         <div className={styles.mainContent}>
+
             <Shipments />
         </div>
     </Layout>

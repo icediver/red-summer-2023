@@ -1,12 +1,17 @@
 import { ICardShipment } from '@/screens/shipments/available-tabs/card-shipment/card-shipment.interface'
 
-export const cities = [
+export interface IOption {
+    value: string
+    label: string
+}
+
+export const cities: IOption[] = [
     { value: 'barcelona', label: 'Barcelona' },
     { value: 'valencia', label: 'Valencia' },
     { value: 'cordoba', label: 'Cordoba' },
     { value: 'seville', label: 'Seville' }
 ]
-export const departments = [
+export const departments: IOption[] = [
     { value: '1', label: '1' },
     { value: '2', label: '2' },
     { value: '3', label: '3' },
@@ -36,125 +41,6 @@ export const sortBy = [
     { value: 'Delay', label: 'Delay' }
 ]
 
-// export const shipmentsData = [
-//     [
-//         "Valencia - Barcelona",
-//         "Cordoba - Barcelona",
-//         "Seville - Barcelona",
-//         "Valencia - Barcelona",
-//         "Seville - Barcelona",
-//         "Seville - Barcelona",
-//         "Seville - Barcelona",
-//         "Valencia - Barcelona",
-//         "Valencia - Barcelona",
-//         "Barcelona",
-//         "Barcelona",
-//         "Cordoba - Barcelona",
-//     ]
-//     ,
-//     [
-//
-//         "B435324",
-//         "B438987",
-//         "8435322",
-//         "B430690",
-//         "B435030",
-//         "B405024",
-//         "B435000",
-//         "8435329",
-//         "B435224",
-//         "B435375",
-//         "B436524",
-//         "8555326",
-//     ]
-//     ,
-//     [
-//         "Iveco 80E18",
-//         "Iveco 90E14",
-//         "Iveco 80E15",
-//         "Iveco 80E18",
-//         "Iveco 80E15",
-//         "Iveco 80E21",
-//         "Iveco 80E15",
-//         "Iveco 90E14",
-//         "Iveco 80E18",
-//         "Iveco 80E15",
-//         "iveco 90E14",
-//         "Iveco 80E18",
-//     ]
-//     ,
-//     [
-//         "800",
-//         "200",
-//         "400",
-//         "250",
-//         "600",
-//         "250",
-//         "300",
-//         "300",
-//         "600",
-//         "200",
-//         "240",
-//         "700",
-//     ]
-//     ,
-//     [
-//         "Delayed",
-//         "Delayed",
-//         "Delayed",
-//         "Delayed",
-//         "Delayed",
-//         "On way",
-//         "On way",
-//         "On way",
-//         "Arrived",
-//         "Arrived",
-//         "Arrived",
-//         "Arrived",
-//     ]
-//     ,
-//     [
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "15 Jun, 07:05 AM",
-//         "15 Jun, 10:05 AM",
-//         "15 Jun, 11:40 AM",
-//         "15 Jun, 10:05 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//     ]
-//     ,
-//
-//     [
-//         "15 Jun, 10:05 AM",
-//         "15 Jun, 11:30 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "15 Jun, 11:20 AM",
-//         "15 Jun, 11:20 AM",
-//         "15 Jun, 10:20 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "10 Jun, 8:00 AM",
-//         "15 Jun, 10:05 AM",
-//         "15 Jun, 10:05 AM",
-//         "15 Jun, 10:05 AM",
-//     ]
-//
-//     ,
-//     [
-//         "5:05 h",
-//         "2:05 h",
-//         "0:30 h",
-//         "0:30 h",
-//         "0:30 h",
-//     ]
-//
-//
-// ]
 export interface IShipmentData {
     Destination: string
     'Shipment number': string
@@ -164,6 +50,7 @@ export interface IShipmentData {
     'Departure date': string
     'Arrival date': string
     'Time delay': string
+    department: string
 }
 
 export const shipmentsData: IShipmentData[] = [
@@ -175,7 +62,8 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Delayed',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '15 Jun, 10:05 AM',
-        'Time delay': '5:05 h'
+        'Time delay': '5:05 h',
+        department: '1'
     },
     {
         Destination: 'Cordoba - Barcelona',
@@ -185,7 +73,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Delayed',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '15 Jun, 11: 30 AM',
-        'Time delay': '2:05 h'
+        'Time delay': '2:05 h',
+        department: '1'
+
     },
     {
         Destination: 'Seville - Barcelona',
@@ -195,7 +85,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Delayed',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '0: 30 h'
+        'Time delay': '0: 30 h',
+        department: '1'
+
     },
     {
         Destination: 'Valencia - Barcelona',
@@ -205,7 +97,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Delayed',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '0: 30 h'
+        'Time delay': '0: 30 h',
+        department: '3'
+
     },
     {
         Destination: 'Seville - Barcelona',
@@ -215,7 +109,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Delayed',
         'Departure date': '15 Jun, 07:05 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '0: 30 h'
+        'Time delay': '0: 30 h',
+        department: '1'
+
     },
     {
         Destination: 'Seville - Barcelona',
@@ -225,7 +121,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'On way',
         'Departure date': '15 Jun, 10:05 AM',
         'Arrival date': '15 Jun, 11: 20 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '2'
+
     },
 
     {
@@ -236,7 +134,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'On way',
         'Departure date': '15 Jun, 11:40 AM',
         'Arrival date': '15 Jun, 11: 20 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '2'
+
     },
     {
         Destination: 'Valencia - Barcelona',
@@ -246,7 +146,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'On way',
         'Departure date': '15 Jun, 10:05 AM',
         'Arrival date': '15 Jun, 10: 20 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '5'
+
     },
     {
         Destination: 'Valencia - Barcelona',
@@ -256,7 +158,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Arrived',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '6'
+
     },
     {
         Destination: 'Barcelona',
@@ -266,7 +170,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Arrived',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '1'
+
     },
     {
         Destination: 'Barcelona',
@@ -276,7 +182,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Arrived',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '10 Jun, 8:00 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '2'
+
     },
     {
         Destination: 'Cordoba - Barcelona',
@@ -286,7 +194,9 @@ export const shipmentsData: IShipmentData[] = [
         Status: 'Arrived',
         'Departure date': '10 Jun, 8:00 AM',
         'Arrival date': '15 Jun, 10:05 AM',
-        'Time delay': '-'
+        'Time delay': '-',
+        department: '4'
+
     }
 ]
 
@@ -294,7 +204,7 @@ export const shipmentsAvailable: ICardShipment[] = [
     {
         route: 'Barcelona-Valencia',
         departure: '15 Jun, 2:00 PM',
-        available: { title: 'Available, kg', value: 20 },
+        available: { title: 'Available, kg', value: 180 },
         number: { title: 'Shipment number', value: 'V435322' },
         truck: { title: 'Truck', value: 'Iveco 80E18' },
         capacity: 200
@@ -320,7 +230,7 @@ export const shipmentsAvailable: ICardShipment[] = [
     {
         route: 'Barcelona-Cordoba',
         departure: '15 Jun, 10:00 PM',
-        available: { title: 'Available, kg', value: 160 },
+        available: { title: 'Available, kg', value: 60 },
         number: { title: 'Shipment number', value: 'V998426' },
         truck: { title: 'Truck', value: 'Iveco 80E21' },
         capacity: 200

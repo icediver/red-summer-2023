@@ -1,25 +1,30 @@
-import { FC } from 'react'
+import { ChangeEvent, Dispatch, FC, SetStateAction } from 'react'
 import styles from './SelectFilters.module.scss'
 
-import Select, { ControlProps, components, GroupBase, OptionsOrGroups } from 'react-select'
+import Select, { ControlProps, components, GroupBase, OptionsOrGroups, OnChangeValue } from 'react-select'
 import clsx from 'clsx'
 import { Options } from 'sass';
+import { IOption } from '@/data/cities';
 
 
 
 
 interface ISelectFilters {
-    options: OptionsOrGroups<unknown, GroupBase<unknown>> | undefined
+    options: IOption[]
     title: string
     variant?: 'first' | 'second'
     instanceId: string
+    // setValue: Dispatch<SetStateAction<string>>
+    handleChange: (event: OnChangeValue<IOption, boolean>) => void
 }
 
-const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first', instanceId }) => {
+const SelectFilters: FC<ISelectFilters> = ({ options, title, variant = 'first', instanceId, handleChange }) => {
     const bg = variant === 'first' ? '!bg-main-bg' : '!bg-white'
     return <div className={styles.select}>
         <Select options={options}
             // components={{ Control({ title: title }) }}
+            isClearable
+            onChange={handleChange}
             components={{
                 Control: ({ children, ...rest }) => (
                     <components.Control {...rest}>
