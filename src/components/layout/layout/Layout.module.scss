@@ -1,33 +1,31 @@
-.layout  {
-    @apply w-screen h-screen bg-bg-color p-3;
-    .border {
-        @apply  h-full bg-border-color p-3  rounded-3xl;
-        .content {
-            @apply flex h-full bg-main-bg rounded-3xl;
-            .rightSide {
-                .children {
-                    @apply overflow-x-hidden h-full bg-main-bg; 
-                }
-            }
+.layout {
+	@apply h-screen w-screen bg-bg-color p-3;
+	.border {
+		@apply h-full rounded-3xl bg-border-color  p-3;
+		.content {
+			@apply flex h-full rounded-3xl bg-main-bg;
+			.rightSide {
+				.children {
+					@apply h-full overflow-x-hidden rounded-r-2xl bg-main-bg;
+				}
+			}
 
-        .collapseButton{
-            @apply w-10 h-10 absolute left-[20%] top-10 ml-4 -translate-x-1/2 bg-main-bg rounded-full p-1.5;
-            transition: all 0.5s ease-in-out;
-            box-shadow: inset 2px 0px 4px rgba(0,0,0,0.05);
-            > button {
-                @apply rounded-full h-full w-full bg-primary-light;
-                        filter: drop-shadow(0px -1px 0px rgba(0,0,0,0.05));
-                    .icon {
-                        @apply translate-x-1/4;
-                  }
-             }
-         }
+			.collapseButton {
+				@apply absolute left-[20%] top-10 ml-4 h-10 w-10 -translate-x-1/2 rounded-full bg-main-bg p-1.5;
+				transition: all 0.5s ease-in-out;
+				box-shadow: inset 2px 0px 4px rgba(0, 0, 0, 0.05);
+				> button {
+					@apply h-full w-full rounded-full bg-primary-light;
+					filter: drop-shadow(0px -1px 0px rgba(0, 0, 0, 0.05));
+					.icon {
+						@apply translate-x-1/4;
+					}
+				}
+			}
 
- .closed {
-           @apply left-4 ml-2;
-       }
-
-
-        }
-    }
+			.closed {
+				@apply left-4 ml-2;
+			}
+		}
+	}
 }

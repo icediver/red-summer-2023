@@ -1,21 +1,21 @@
 .shipments {
-    @apply w-full pl-8 pr-8 py-6; 
-     .shipmentsHeader {
-    @apply flex justify-between; 
-    .leftSide {
-        > span {
-            @apply text-xl mr-3;
-        }
-        @apply flex flex-row justify-start gap-2 items-center;
-        .button {
-            @apply  py-2 text-xs bg-primary/20 px-3 rounded-md mr-3  text-primary;
-        }
-        .activeTab {
-            @apply bg-primary text-white/60;
-        }
-    }
-   .rightSide {
-       @apply flex gap-2; 
-   } 
-   }
+	@apply w-full rounded-r-2xl  py-6 pl-8 pr-8;
+	.shipmentsHeader {
+		@apply flex justify-between;
+		.leftSide {
+			> span {
+				@apply mr-3 text-xl;
+			}
+			@apply flex flex-row items-center justify-start gap-2;
+			.button {
+				@apply mr-3 rounded-md bg-primary/20 px-3 py-2 text-xs  text-primary;
+			}
+			.activeTab {
+				@apply bg-primary text-white/60;
+			}
+		}
+		.rightSide {
+			@apply flex gap-2;
+		}
+	}
 }
