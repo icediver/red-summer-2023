@@ -1,0 +1,92 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+.card {
+	@apply rounded bg-white;
+	animation: fadeIn 0.5s ease-in-out;
+
+	.header {
+		@apply flex flex-row items-center justify-between py-3;
+		.leftSideHeader {
+			@apply flex flex-row items-center gap-2;
+			.route {
+				@apply font-semibold;
+			}
+		}
+		.percent {
+			@apply text-2xl text-error-color;
+		}
+	}
+	.main {
+		@apply flex flex-row;
+		.leftColumn {
+			@apply w-[250px] pt-3;
+			.title {
+				@apply py-3 text-xs text-black-inactive;
+			}
+			.value {
+				@apply text-xl font-normal;
+				> span {
+					@apply text-black-inactive;
+				}
+			}
+		}
+
+		.rightColumn {
+			.truck {
+				@apply relative h-[175px] w-[350px];
+				.progress {
+					@apply absolute left-24  top-1 h-[116px] w-[248px] bg-black-inactive/30;
+					.total {
+						@apply left-0 h-full;
+						animation: right-animate 1.5s ease;
+					}
+				}
+			}
+		}
+	}
+}
+@keyframes right-animate {
+	from {
+		clip-path: inset(0 100% 0 0);
+		opacity: 0;
+	}
+	to {
+		clip-path: inset(0 0 0 0);
+		opacity: 1;
+	}
+}
+
+.red {
+	background: repeating-linear-gradient(
+		-60deg,
+		#d95666,
+		#d95666 15px,
+		#d85060 15px,
+		#d85060 28px
+	);
+}
+.yellow {
+	background: repeating-linear-gradient(
+		-60deg,
+		#eda336,
+		#eda336 15px,
+		#e49c35 15px,
+		#e49c35 28px
+	);
+}
+.green {
+	background: repeating-linear-gradient(
+		-60deg,
+		#53c57b,
+		#53c57b 15px,
+		#3cba66 15px,
+		#3cba66 28px
+	);
+}

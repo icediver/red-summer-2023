@@ -1,8 +1,12 @@
-import { SERVER_URL } from '@/api/config/api.config';
 import axiosClassic from '@/api/interceptors/axiosClassic';
 
-import { TypeShipmentDataFilters } from './tracking.types';
-import { IShipmentData, shipmentsData } from '@/data/cities';
+import {
+	TypeDataFilters,
+	TypeShipmentsAvailableFilter
+} from './tracking.types';
+import { IArrivalData } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
+import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
+import { IAvailablePackage } from '@/screens/shipments/truck-loading/available-package.interface';
 
 export interface ISearchParam {
 	searchTerm?: string;
@@ -10,43 +14,42 @@ export interface ISearchParam {
 	department?: string;
 }
 
-export const TrackingService = {
-	async getAll(searchParam: ISearchParam) {
-		const { searchTerm, city, department } = searchParam;
-		const resultSearch = searchByTrackNumber(shipmentsData, searchTerm);
-		const resultByCity = filterByCity(resultSearch, city);
-		const resultByDepartment = filterByDepartment(resultByCity, department);
+export enum Source {
+	Arrival = 'getArrival',
+	Available = 'getAvailable',
+	Departure = 'getDeparture'
+}
 
-		return resultByDepartment;
-	},
-	async getAllShipments(queryData = {} as TypeShipmentDataFilters) {
-		return axiosClassic<IShipmentData[]>({
+export const TrackingService = {
+	async getArrival(queryData = {} as TypeDataFilters) {
+		console.log('getArrival');
+		return axiosClassic<IArrivalData[]>({
 			url: 'arrival',
 			method: 'GET',
 			params: queryData
 		});
+	},
+	async getAvailable(queryData = {} as TypeShipmentsAvailableFilter) {
+		console.log('getAvailable');
+		return axiosClassic<ICardShipment[]>({
+			url: 'available',
+			method: 'GET',
+			params: queryData
+		});
+	},
+	async getAvailableByNumber(number: string) {
+		console.log('getAvailableByNumber');
+		return axiosClassic.get<ICardShipment>(`/shipments/${number}`);
+	},
+	async getDeparture(queryData = {} as TypeDataFilters) {
+		console.log('getDeparture');
+		return axiosClassic<IArrivalData[]>({
+			url: 'departure',
+			method: 'GET',
+			params: queryData
+		});
+	},
+	async getAvailablePackages() {
+		return axiosClassic<IAvailablePackage[]>('/available-packages');
 	}
 };
-
-function searchByTrackNumber(
-	shipmentsData: IShipmentData[],
-	searchTerm?: string
-) {
-	if (!searchTerm) return shipmentsData;
-	return shipmentsData.filter(parcel =>
-		parcel['Shipment number'].toLowerCase().includes(searchTerm.toLowerCase())
-	);
-}
-function filterByCity(shipmentsData: IShipmentData[], city?: string) {
-	if (!city) return shipmentsData;
-	return shipmentsData.filter(parcel =>
-		parcel['Destination'].toLowerCase().includes(city)
-	);
-}
-function filterByDepartment(
-	shipmentsData: IShipmentData[],
-	department?: string
-) {
-	if (!department) return shipmentsData;
-	return shipmentsData.filter(parcel => parcel.department.includes(department));
-}

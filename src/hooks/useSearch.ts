@@ -4,9 +4,12 @@ import { OnChangeValue } from 'react-select';
 
 import { useDebounce } from './useDebounce';
 import { IOption } from '@/data/cities';
-import { TrackingService } from '@/services/tracking.service';
+import { Source, TrackingService } from '@/services/tracking.service';
+
+type TypeSourceData = 'Arrival' | 'Available' | 'Departure';
 
 export const useSearch = () => {
+	const [sourceData, setSourceData] = useState<Source>(Source.Arrival);
 	const [number, setNumber] = useState('');
 	const [city, setCity] = useState('');
 	const [department, setDepartment] = useState('');
@@ -25,13 +28,13 @@ export const useSearch = () => {
 
 	const debouncedSearch = useDebounce(searchParam, 500);
 
-	const { isSuccess, data } = useQuery(
-		['search tracking', debouncedSearch],
-		() => TrackingService.getAllShipments(debouncedSearch),
+	const { isSuccess: isSuccessArrival, data: arrival } = useQuery(
+		['search arrival', debouncedSearch],
+		() => {
+			return TrackingService.getArrival(debouncedSearch);
+		},
 		{ select: ({ data }) => data }
 	);
-
-	console.log(data);
 
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		setNumber(e.target.value);
@@ -53,18 +56,21 @@ export const useSearch = () => {
 		setArrivalDate((newValue as IOption)?.value);
 	};
 
-	const handleSortBy = (newValue: OnChangeValue<IOption, boolean>) => {
-		setSortBy((newValue as IOption)?.value);
+	const handleSortBy = (newValue: OnChangeValue<IOption, boolean> | string) => {
+		if (typeof newValue === 'string') setSortBy(newValue);
+		else setSortBy((newValue as IOption)?.value);
 	};
-
+	const handleSourceData = (newData: Source) => {
+		setSourceData(newData);
+	};
 	return {
-		isSuccess,
+		isSuccessArrival,
+		handleSourceData,
 		handleSearch,
 		handleChangeCity,
 		handleChangeDepartment,
 		handleChangeArrivalDate,
 		handleSortBy,
-		data,
-		number
+		arrival
 	};
 };

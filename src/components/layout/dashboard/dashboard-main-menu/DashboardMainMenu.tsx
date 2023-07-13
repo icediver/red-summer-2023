@@ -10,7 +10,7 @@ import {
 } from './data/dashvoard-menu/dashboard.menu';
 
 const DashboardMainMenu: FC = () => {
-	const [isActive, setIsActive] = useState<number>(-1);
+	const [isActive, setIsActive] = useState<number>(1);
 	return (
 		<div className={styles.dashboardMenu}>
 			<div>

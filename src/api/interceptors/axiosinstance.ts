@@ -1,16 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
-import {
-	API_SERVER_URL,
-	API_URL,
-	IS_PRODUCTION
-} from '@/api/config/api.config';
+import { SERVER_URL } from '@/api/config/api.config';
 
 import { errorCatch, getContentType } from '../api.helpers';
 
 export const instance = axios.create({
-	baseURL: IS_PRODUCTION ? API_URL : API_SERVER_URL,
+	baseURL: SERVER_URL,
 	headers: getContentType()
 });
 

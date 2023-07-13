@@ -1,59 +1,45 @@
 import clsx from 'clsx';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { OnChangeValue } from 'react-select';
-
-import SearchTracking from '@/layout/layout/header/search-tracking/SearchTracking';
+import { FC, useState } from 'react';
 
 import SelectFilters from '@/ui/select-filters/SelectFilters';
 
-import {
-	getArivalDate,
-	getSelectOptions,
-	getSortKeys,
-	sortArrival,
-	sortShipmentData
-} from '@/shared/getArivalDate';
+import { getDates, getSelectOptions, getSortKeys } from '@/shared/data.utils';
 
 import { useSearch } from '@/hooks/useSearch';
+import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Shipments.module.scss';
-import AvailableTabs from './available-tabs/AvailableTabs';
-import ShipmentsTableHeader from './shipments-header/ShipmentsHeader';
-import ShipmentsTable from './shipments-table/ShipmentsTable';
-import { IOption, IShipmentData, sortBy } from '@/data/cities';
-import { TrackingService } from '@/services/tracking.service';
+import ArrivalTab from './arrival-tab/ArrivalTab';
+import { IArrivalData } from './arrival-tab/arrival-tab.interface';
+import AvailableTab from './available-tab/AvailableTab';
+import { ICardShipment } from './available-tab/card-shipment/card-shipment.interface';
+import SearchTracking from './header/search-tracking/SearchTracking';
+import { Source } from '@/services/tracking.service';
+
+export type ShipmentsType = IArrivalData | ICardShipment;
 
 const Shipments: FC = () => {
 	const {
-		isSuccess,
 		handleSearch,
-		data,
-		number,
-		handleChangeCity,
-		handleChangeArrivalDate,
+		handleSortBy,
 		handleChangeDepartment,
-		handleSortBy
-	} = useSearch();
-	const [shipments, setShipments] = useState<IShipmentData[]>([]);
-	const [activeTab, setActiveTab] = useState<number>(1);
-	const dates = getArivalDate(data || []);
+		handleChangeCity,
+		handleChangeDate,
+		searchParamsWithDebounce
+	} = useSearchParams();
+	const [shipments, setShipments] = useState<ShipmentsType[]>([]);
+	const [arrivalLength, setArrivalLength] = useState<number>(0);
+	const [availableLength, setAvailableLength] = useState<number>(0);
 
-	TrackingService.getAllShipments({
-		number: 'b4',
-		city: 'Barcelona',
-		sort: 'Total weight, kg'
-	}).then(res => console.log(res.data));
+	const [activeTab, setActiveTab] = useState<Source>(Source.Arrival);
+	const dates = getDates(shipments || []);
 
-	const sort = getSortKeys(data || []);
-
-	useEffect(() => {
-		if (data) setShipments(data);
-	}, [data]);
+	const sort = getSortKeys(shipments || []);
 
 	return (
 		<div className={styles.shipments}>
 			<SearchTracking
-				searchField={{ number, handleSearch }}
+				handleSearch={handleSearch}
 				handleChangeCity={handleChangeCity}
 				handleChangeDepartment={handleChangeDepartment}
 			/>
@@ -61,25 +47,25 @@ const Shipments: FC = () => {
 				<div className={styles.leftSide}>
 					<span>Shipments</span>
 					<button
-						onClick={() => setActiveTab(1)}
+						onClick={() => setActiveTab(Source.Arrival)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === 1
+							[styles.activeTab]: activeTab === Source.Arrival
 						})}
 					>
-						Arrival({data?.length})
+						Arrival({arrivalLength})
 					</button>
 					<button
-						onClick={() => setActiveTab(2)}
+						onClick={() => setActiveTab(Source.Available)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === 2
+							[styles.activeTab]: activeTab === Source.Available
 						})}
 					>
-						Available(5)
+						Available({availableLength})
 					</button>
 					<button
-						onClick={() => setActiveTab(3)}
+						onClick={() => setActiveTab(Source.Departure)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === 3
+							[styles.activeTab]: activeTab === Source.Departure
 						})}
 					>
 						Departure(32)
@@ -99,18 +85,26 @@ const Shipments: FC = () => {
 						options={getSelectOptions(dates)}
 						variant='second'
 						instanceId='arival-date-filter'
-						// handleChange={handleChangeDate}
-						handleChange={handleChangeArrivalDate}
+						handleChange={handleChangeDate}
+						// handleChange={handleChangeArrivalDate}
 					/>
 				</div>
 			</div>
-			{activeTab === 1 ? (
+			{activeTab === Source.Arrival ? (
 				<>
-					<ShipmentsTableHeader handleSort={handleSortBy} />
-					<ShipmentsTable shipments={shipments} />
+					<ArrivalTab
+						handleSort={handleSortBy}
+						searchParams={searchParamsWithDebounce}
+						setShipments={setShipments}
+						setArrivalLength={setArrivalLength}
+					/>
 				</>
-			) : activeTab === 2 ? (
-				<AvailableTabs />
+			) : activeTab === Source.Available ? (
+				<AvailableTab
+					setShipments={setShipments}
+					searchParams={searchParamsWithDebounce}
+					setAvailableLength={setAvailableLength}
+				/>
 			) : (
 				<></>
 			)}

@@ -4,11 +4,11 @@ import { FiSearch } from 'react-icons/fi';
 import styles from './SearchField.module.scss';
 
 export interface ISearchField {
-	number: string;
+	// number: string;
 	handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchField: FC<ISearchField> = ({ number, handleSearch }) => {
+const SearchField: FC<ISearchField> = ({ handleSearch }) => {
 	return (
 		<div className={styles.search}>
 			<FiSearch size={22} />

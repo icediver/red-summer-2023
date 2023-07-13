@@ -1,0 +1,79 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate(400px, 400px);
+	}
+	to {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}
+.container {
+	@apply h-full;
+
+	animation: fadeIn 0.5s;
+	.header {
+		@apply px-8 py-3;
+		.breadCrumb {
+			@apply mt-2 text-xs;
+			> span {
+				@apply text-primary;
+			}
+		}
+		.title {
+			@apply mt-2 text-xl font-semibold;
+			.departure {
+				@apply ml-4 text-xs text-black-inactive;
+			}
+		}
+	}
+
+	.loading {
+		@apply grid grid-cols-2 gap-8 px-6;
+		.leftSide {
+			@apply h-full rounded-md bg-white px-4 text-sm;
+			.upperTier {
+				@apply my-3 grid grid-cols-4 gap-4 text-center;
+				.active {
+					@apply mx-auto h-24 w-full rounded-md bg-primary;
+					animation: width 0.8s ease;
+				}
+				.empty {
+					@apply mx-auto h-24 w-full rounded-md bg-secondary/60;
+				}
+				.fully {
+					@apply mx-auto h-24 w-full rounded-md bg-main-bg;
+				}
+			}
+			.footer {
+				@apply mb-4 mt-6 flex justify-between gap-x-6 p-1 font-semibold;
+			}
+		}
+		.rightSide {
+			@apply h-full rounded-md bg-secondary;
+		}
+	}
+}
+.parcel {
+	@apply absolute flex h-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center  bg-white p-4 shadow;
+	> svg {
+		@apply inline-block fill-warning;
+	}
+	> div {
+		> span {
+			@apply font-semibold text-black;
+		}
+		@apply ml-2 inline-block text-xs text-black-inactive;
+	}
+}
+
+@keyframes width {
+	from {
+		opacity: 0;
+		width: 0;
+	}
+	to {
+		opacity: 1;
+		opacity: 100%;
+	}
+}

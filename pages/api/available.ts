@@ -1,11 +1,11 @@
 import DataStore from '@seald-io/nedb';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { shipmentsData } from './data/data';
+import { shipmentsAvailable } from './data/data';
 
 const db = new DataStore();
 
-const documents = shipmentsData.map(shipment => {
+const documents = shipmentsAvailable.map(shipment => {
 	return db.insertAsync(shipment);
 });
 
@@ -16,14 +16,9 @@ export default async function handler(
 	if (req.method === 'GET') {
 		await documents;
 		const { number, city, date, department, sort: sortBy } = req.query;
-
-		const numberFilter = number
-			? { 'Shipment number': new RegExp(`${number}`, 'i') }
-			: {};
-		const cityFilter = city ? { Destination: new RegExp(`${city}`, 'i') } : {};
-		const dateFilter = date
-			? { 'Arrival date': new RegExp(`${date}`, 'i') }
-			: {};
+		const numberFilter = number ? { number: new RegExp(`${number}`, 'i') } : {};
+		const cityFilter = city ? { route: new RegExp(`${city}`, 'i') } : {};
+		const dateFilter = date ? { departure: new RegExp(`${date}`, 'i') } : {};
 		const departmentFilter = department
 			? {
 					department: new RegExp(`${department}`, 'i')

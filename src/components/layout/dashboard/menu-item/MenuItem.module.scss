@@ -1,17 +1,15 @@
-
-    .menuItem {
-        @apply flex px-4 w-full  items-end justify-between my-4 py-1;
-        div > svg {
-            @apply inline-block mr-3;
-        }
-        .notification{
-            @apply w-8 h-6 bg-error-color rounded text-center text-white;
-        } 
-    }
-    .active {
-        @apply bg-main-bg border-l-2 border-primary rounded-r-md; 
-         div > svg {
-            @apply fill-primary;
-        }
-
-    }
+.menuItem {
+	@apply my-4 flex w-full  items-end justify-between px-4 py-2;
+	div > svg {
+		@apply mr-3 inline-block;
+	}
+	.notification {
+		@apply h-6 w-8 rounded bg-error-color text-center text-white;
+	}
+}
+.active {
+	@apply rounded-r-md border-l-2 border-primary bg-main-bg;
+	div > svg {
+		@apply fill-primary;
+	}
+}

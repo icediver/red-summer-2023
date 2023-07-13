@@ -1,0 +1,17 @@
+.wrapper {
+	@apply h-full rounded-md bg-white px-8;
+	.title {
+		@apply py-4 text-xl font-semibold;
+		> span {
+			@apply ml-6 text-xs text-black-inactive;
+		}
+	}
+	.header {
+		@apply z-10 grid grid-cols-3 rounded-md  bg-main-bg px-2 py-3 text-xs font-semibold;
+		.number {
+			@apply flex gap-2;
+		}
+	}
+	.table {
+	}
+}
