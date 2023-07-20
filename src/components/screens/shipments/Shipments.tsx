@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { FC, useState } from 'react';
+import { FC, MouseEvent, useState } from 'react';
 
 import SelectFilters from '@/ui/select-filters/SelectFilters';
 
@@ -11,7 +11,10 @@ import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Shipments.module.scss';
 import ArrivalTab from './arrival-tab/ArrivalTab';
-import { IArrivalData } from './arrival-tab/arrival-tab.interface';
+import {
+	IArrivalData,
+	IShipmentsData
+} from './arrival-tab/arrival-tab.interface';
 import AvailableTab from './available-tab/AvailableTab';
 import { ICardShipment } from './available-tab/card-shipment/card-shipment.interface';
 import SearchTracking from './header/search-tracking/SearchTracking';
@@ -28,14 +31,27 @@ const Shipments: FC = () => {
 		handleChangeDate,
 		searchParamsWithDebounce
 	} = useSearchParams();
-	const [shipments, setShipments] = useState<ShipmentsType[]>([]);
+	const [shipmentsData, setShipmentsData] = useState<IShipmentsData>(
+		{} as IShipmentsData
+	);
 	const [arrivalLength, setArrivalLength] = useState<number>(0);
 	const [availableLength, setAvailableLength] = useState<number>(0);
 
 	const [activeTab, setActiveTab] = useState<Source>(Source.Arrival);
-	const dates = getDates(shipments || []);
+	const dates = getDates(shipmentsData?.shipments || []);
 
-	const sort = getSortKeys(shipments || []);
+	const sort = getSortKeys(shipmentsData?.shipments || []);
+
+	const counts: { [key: string]: string } =
+		shipmentsData?.categoryCount?.reduce(function (result, item) {
+			const key = Object.keys(item)[0] as keyof typeof item; //first property: a, b, c
+			result[key] = item[key];
+			return result;
+		}, {});
+
+	function availableHandler(event: MouseEvent<HTMLButtonElement>) {
+		setActiveTab(Source.Available);
+	}
 
 	return (
 		<div className={styles.shipments}>
@@ -53,7 +69,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeTab === Source.Arrival
 						})}
 					>
-						Arrival({arrivalLength})
+						Arrival({counts?.Arrival})
 					</button>
 					<button
 						onClick={() => setActiveTab(Source.Available)}
@@ -61,7 +77,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeTab === Source.Available
 						})}
 					>
-						Available({availableLength})
+						Available({counts?.Available})
 					</button>
 					<button
 						onClick={() => setActiveTab(Source.Departure)}
@@ -69,7 +85,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeTab === Source.Departure
 						})}
 					>
-						Departure(32)
+						Departure({counts?.Departure})
 					</button>
 				</div>
 				<div className={styles.rightSide}>
@@ -96,13 +112,13 @@ const Shipments: FC = () => {
 					<ArrivalTab
 						handleSort={handleSortBy}
 						searchParams={searchParamsWithDebounce}
-						setShipments={setShipments}
+						setShipments={setShipmentsData}
 						setArrivalLength={setArrivalLength}
 					/>
 				</>
 			) : activeTab === Source.Available ? (
 				<AvailableTab
-					setShipments={setShipments}
+					setShipments={setShipmentsData}
 					searchParams={searchParamsWithDebounce}
 					setAvailableLength={setAvailableLength}
 				/>

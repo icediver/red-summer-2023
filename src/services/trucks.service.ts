@@ -23,16 +23,13 @@ export enum Source {
 	Departure = 'getDeparture'
 }
 
-export const TrackingService = {
-	async getArrival(queryData = {} as TypeDataFilters) {
+export const TruckService = {
+	async getAll(queryData = {} as TypeDataFilters) {
 		console.log('getArrival');
-		console.log('from service queryData', queryData);
-
-		return axiosClassic<IShipmentsData>({
-			// url: 'arrival',
-			url: 'trucks',
+		return axiosClassic<IShipmentsData[]>({
+			url: 'arrival',
 			method: 'GET',
-			params: { ...queryData, category: 1 }
+			params: queryData
 		});
 	},
 	async getAvailable(queryData = {} as TypeShipmentsAvailableFilter) {

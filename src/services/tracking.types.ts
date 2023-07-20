@@ -4,6 +4,7 @@ export type TypeDataFilters = {
 	date?: string;
 	city?: string;
 	department?: string;
+	category?: string;
 };
 
 export type TypeShipmentsAvailableFilter = {

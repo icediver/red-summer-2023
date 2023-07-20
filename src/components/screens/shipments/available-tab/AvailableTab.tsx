@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Dispatch, FC, SetStateAction, useEffect } from 'react';
 
 import { ShipmentsType } from '../Shipments';
+import { IShipmentsData } from '../arrival-tab/arrival-tab.interface';
 
 import styles from './AvailableTab.module.scss';
 import CardShipment from './card-shipment/CardShipment';
@@ -9,7 +10,7 @@ import { TrackingService } from '@/services/tracking.service';
 import { TypeDataFilters } from '@/services/tracking.types';
 
 const AvailableTab: FC<{
-	setShipments: Dispatch<SetStateAction<ShipmentsType[]>>;
+	setShipments: Dispatch<SetStateAction<IShipmentsData>>;
 	searchParams: TypeDataFilters;
 	setAvailableLength: Dispatch<SetStateAction<number>>;
 }> = ({ setShipments, searchParams, setAvailableLength }) => {

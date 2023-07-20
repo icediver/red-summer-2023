@@ -12,7 +12,7 @@ const ArrivalTab: FC<IArrivalTab> = ({
 	setShipments,
 	setArrivalLength
 }) => {
-	const { isSuccess, data = [] } = useQuery(
+	const { isSuccess, data } = useQuery(
 		['search arrival', searchParams],
 		() => {
 			return TrackingService.getArrival(searchParams);
@@ -20,13 +20,15 @@ const ArrivalTab: FC<IArrivalTab> = ({
 		{ select: ({ data }) => data }
 	);
 	useEffect(() => {
-		setShipments(data);
-		setArrivalLength(data.length);
+		if (data) {
+			setShipments(data);
+			setArrivalLength(data.categoryCount[0]['Arrival']);
+		}
 	}, [data]);
 	return (
 		<>
 			<ShipmentsTableHeader handleSort={handleSort} />
-			<ShipmentsTable tableData={data} />
+			{data && <ShipmentsTable shipments={data.shipments} />}
 		</>
 	);
 };
