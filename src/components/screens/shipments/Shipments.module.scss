@@ -10,7 +10,7 @@
 	@apply w-full rounded-r-2xl  py-6 pl-8 pr-8;
 	animation: fadeIn 0.8s ease-in-out;
 	.shipmentsHeader {
-		@apply flex justify-between;
+		@apply flex  justify-between;
 		.leftSide {
 			> span {
 				@apply mr-3 text-xl;
@@ -22,6 +22,7 @@
 			.activeTab {
 				@apply bg-primary text-white/60;
 			}
+			margin-right: 10px;
 		}
 		.rightSide {
 			@apply flex gap-2;

@@ -1,11 +1,10 @@
 .search {
-    @apply  top-5 mb-8;
-    > svg {
-         @apply absolute top-5 left-3 text-black-inactive; 
-     }
+	@apply top-5 mb-8;
+	> svg {
+		@apply absolute left-3 top-5 text-black-inactive;
+	}
 
-> input {
-         @apply py-6 pl-10 pr-4 rounded-md text-xs w-full ; 
-     }
-
+	> input {
+		@apply w-full rounded-md py-6 pl-10 pr-4 text-xs;
+	}
 }

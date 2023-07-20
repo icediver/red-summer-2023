@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { FC, useState } from 'react';
 
@@ -5,7 +7,6 @@ import SelectFilters from '@/ui/select-filters/SelectFilters';
 
 import { getDates, getSelectOptions, getSortKeys } from '@/shared/data.utils';
 
-import { useSearch } from '@/hooks/useSearch';
 import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Shipments.module.scss';

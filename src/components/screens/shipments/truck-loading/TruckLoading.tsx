@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import Link from 'next/link';
 import {
@@ -15,7 +17,6 @@ import { TbBox } from 'react-icons/tb';
 
 import Button from '@/ui/button/Button';
 
-import CardShipment from '../available-tab/card-shipment/CardShipment';
 import { ICardShipment } from '../available-tab/card-shipment/card-shipment.interface';
 
 import styles from './TruckLoading.module.scss';
@@ -23,57 +24,29 @@ import { IAvailablePackage } from './available-package.interface';
 import AvailablePackages from './available-packages/AvailablePackages';
 import CardLoading from './available-packages/card-loading/CardLoading';
 import ErrorModal from './available-packages/error-modal/ErrorModal';
+import CargoSpace from './cargo-space/CargoSpace';
+import { useTruckLoading } from './useTruckLoading';
 
 const TruckLoading: FC<{
 	data: ICardShipment;
 	packages: IAvailablePackage[];
 }> = ({ data, packages }) => {
-	const [isShowParcel, setShowParcel] = useState<boolean>(false);
-	const [selectedParcels, setSelectedParcels] = useState<IAvailablePackage[]>(
-		[]
-	);
-	const [status, setStatus] = useState('empty');
-	const [truck, setTruck] = useState<ICardShipment>({} as ICardShipment);
-	const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
-	useEffect(() => console.log(selectedParcels), [selectedParcels]);
-	useEffect(() => setTruck({ ...data }), []);
-
-	const [mouseCoordinates, setMouseCoordinates] = useState<{
-		x: number;
-		y: number;
-	}>({ x: 0, y: 0 });
-	const onMouseDownHandler: MouseEventHandler<HTMLDivElement> = (
-		event: MouseEvent<HTMLDivElement>
-	) => {
-		setShowParcel(true);
-		// console.log(event.clientX, event.clientY);
-		setMouseCoordinates({ x: event.clientX, y: event.clientY });
-	};
-	const onDragStartHandler = (event: any) => {
-		// console.log(event, typeof event, 'start');
-	};
-	const onDragOverHandler: DragEventHandler<HTMLDivElement> = event => {
-		event.stopPropagation();
-		event.preventDefault();
-	};
-
-	const onDropHandler: DragEventHandler<HTMLDivElement> = e => {
-		const aditionalVolume = selectedParcels.reduce(
-			(sum, el) => sum + el.volumeWeight,
-			0
-		);
-		const available = truck.available + aditionalVolume;
-		setShowParcel(false);
-		if (available <= truck.capacity) {
-			setTruck({ ...truck, available });
-			setStatus('active');
-		} else setIsErrorModalOpen(true);
-	};
-	const onDragEnterHandler: DragEventHandler<HTMLDivElement> = event => {
-		setShowParcel(false);
-	};
+	const {
+		onDragEnterHandler,
+		onMouseDownHandler,
+		onDropHandler,
+		isShowParcel,
+		setIsShowParcel,
+		mouseCoordinates,
+		truck,
+		selectedParcels,
+		setSelectedParcels,
+		isErrorModalOpen,
+		setIsErrorModalOpen,
+		status
+	} = useTruckLoading(data);
 	return (
-		<div className={styles.container} onMouseUp={() => setShowParcel(false)}>
+		<div className={styles.container} onMouseUp={() => setIsShowParcel(false)}>
 			<div className={styles.header}>
 				<div className={styles.breadCrumb}>
 					Shipments / <span>{data.number}</span>
@@ -88,40 +61,7 @@ const TruckLoading: FC<{
 				<div className={styles.leftSide}>
 					<div onDragEnter={() => console.log('onDragEnter')}>
 						{truck.available && <CardLoading {...truck} />}
-						<div>
-							Upper tier
-							<FaCloudscale className='text-black-inactive inline-block ml-4' />
-						</div>
-						<div className={styles.upperTier}>
-							<div className={clsx(styles['empty'])}></div>
-							<div className={styles.fully}></div>
-							<div className={styles.fully}></div>
-							<div className={styles.fully}></div>
-						</div>
-						<div>
-							Middel tier
-							<FaCloudscale className='text-black-inactive inline-block ml-4' />
-						</div>
-						<div className={styles.upperTier}>
-							<div className={styles.fully}></div>
-							<div className={styles.fully}></div>
-							<div
-								className={styles[status]}
-								onDrop={onDropHandler}
-								onDragOver={onDragOverHandler}
-							></div>
-							<div className={styles.fully}></div>
-						</div>
-						<div>
-							Lower tier
-							<FaCloudscale className='text-black-inactive inline-block ml-4' />
-						</div>
-						<div className={styles.upperTier}>
-							<div className={styles.fully}></div>
-							<div className={styles.empty}></div>
-							<div className={styles.fully}></div>
-							<div className={styles.fully}></div>
-						</div>
+						<CargoSpace onDropHandler={onDropHandler} status={status} />
 					</div>
 					<div className={styles.footer}>
 						<Button
@@ -151,7 +91,6 @@ const TruckLoading: FC<{
 							className={styles.parcel}
 							style={{ left: mouseCoordinates.x, top: mouseCoordinates.y }}
 							draggable
-							onDragStart={onDragStartHandler}
 							onDragEnter={onDragEnterHandler}
 						>
 							<GrDropbox />

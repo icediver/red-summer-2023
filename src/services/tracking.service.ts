@@ -39,7 +39,7 @@ export const TrackingService = {
 	},
 	async getAvailableByNumber(number: string) {
 		console.log('getAvailableByNumber');
-		return axiosClassic.get<ICardShipment>(`/shipments/${number}`);
+		return axiosClassic.get<ICardShipment[]>(`/available/${number}`);
 	},
 	async getDeparture(queryData = {} as TypeDataFilters) {
 		console.log('getDeparture');
@@ -50,6 +50,6 @@ export const TrackingService = {
 		});
 	},
 	async getAvailablePackages() {
-		return axiosClassic<IAvailablePackage[]>('/available-packages');
+		return axiosClassic<IAvailablePackage[]>('/packages');
 	}
 };

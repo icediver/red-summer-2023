@@ -1,4 +1,5 @@
-import { IOption, IShipmentData } from '@/data/cities';
+import { IOption } from '@/ui/select-filters/select.types';
+
 import { ShipmentsType } from '@/screens/shipments/Shipments';
 
 export function getDates<T>(data: T[]) {
