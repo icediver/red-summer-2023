@@ -1,0 +1,13 @@
+.upperTier {
+	@apply my-3 grid grid-cols-4 gap-4 text-center;
+	.active {
+		@apply mx-auto h-24 w-full rounded-md bg-primary;
+		animation: width 0.8s ease;
+	}
+	.empty {
+		@apply mx-auto h-24 w-full rounded-md bg-secondary/60;
+	}
+	.fully {
+		@apply mx-auto h-24 w-full rounded-md bg-main-bg;
+	}
+}

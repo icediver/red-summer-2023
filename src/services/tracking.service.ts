@@ -4,7 +4,10 @@ import {
 	TypeDataFilters,
 	TypeShipmentsAvailableFilter
 } from './tracking.types';
-import { IArrivalData } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
+import {
+	IArrivalData,
+	IShipmentsData
+} from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
 import { IAvailablePackage } from '@/screens/shipments/truck-loading/available-package.interface';
 
@@ -15,16 +18,19 @@ export interface ISearchParam {
 }
 
 export enum Source {
-	Arrival = 'getArrival',
-	Available = 'getAvailable',
-	Departure = 'getDeparture'
+	Arrival = 1,
+	Available = 2,
+	Departure = 3
 }
 
 export const TrackingService = {
 	async getArrival(queryData = {} as TypeDataFilters) {
 		console.log('getArrival');
-		return axiosClassic<IArrivalData[]>({
-			url: 'arrival',
+		// console.log('from service queryData', queryData);
+
+		return axiosClassic<IShipmentsData>({
+			// url: 'arrival',
+			url: 'trucks',
 			method: 'GET',
 			params: queryData
 		});
@@ -39,7 +45,7 @@ export const TrackingService = {
 	},
 	async getAvailableByNumber(number: string) {
 		console.log('getAvailableByNumber');
-		return axiosClassic.get<ICardShipment>(`/shipments/${number}`);
+		return axiosClassic.get<ICardShipment[]>(`/available/${number}`);
 	},
 	async getDeparture(queryData = {} as TypeDataFilters) {
 		console.log('getDeparture');
@@ -50,6 +56,6 @@ export const TrackingService = {
 		});
 	},
 	async getAvailablePackages() {
-		return axiosClassic<IAvailablePackage[]>('/available-packages');
+		return axiosClassic<IAvailablePackage[]>('/packages');
 	}
 };

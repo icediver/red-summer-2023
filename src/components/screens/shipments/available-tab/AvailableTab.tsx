@@ -11,8 +11,8 @@ import { TypeDataFilters } from '@/services/tracking.types';
 const AvailableTab: FC<{
 	setShipments: Dispatch<SetStateAction<ShipmentsType[]>>;
 	searchParams: TypeDataFilters;
-	setAvailableLength: Dispatch<SetStateAction<number>>;
-}> = ({ setShipments, searchParams, setAvailableLength }) => {
+	// setAvailableLength: Dispatch<SetStateAction<number>>;
+}> = ({ setShipments, searchParams }) => {
 	const { isSuccess, data = [] } = useQuery(
 		['search available', searchParams],
 		() => {
@@ -22,7 +22,7 @@ const AvailableTab: FC<{
 	);
 	useEffect(() => {
 		setShipments(data);
-		setAvailableLength(data.length);
+		// setAvailableLength(data.length);
 	}, [data]);
 	return (
 		<div className={styles.available}>

@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+model Parcel {
+  id    Int    @id @default(autoincrement())
+  parcelNumber  String @unique
+  volumeWeight  Int
+  admissionDate String
+  truck     Truck? @relation(fields: [truckId], references:[id])
+  truckId Int? 
+}
+
+model Truck {
+    id  Int @id @default(autoincrement())
+    number String @unique
+    capacity Int
+    model    String
+    parcels  Parcel[]
+    destination String
+    status      String
+    departureDate   DateTime?
+    arrivalDate      DateTime?
+    delay       String?
+    department  Int
+    category    Category? @relation(fields:[categoryId], references: [id])
+    categoryId  Int?
+ } 
+
+ model Category {
+    id Int @id @default(autoincrement())
+    name    String @unique
+    trucks Truck[]
+ }

@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from 'clsx';
 import { log } from 'console';
 import Image from 'next/image';

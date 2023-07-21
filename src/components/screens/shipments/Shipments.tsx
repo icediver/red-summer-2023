@@ -1,25 +1,32 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { FC, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 
 import SelectFilters from '@/ui/select-filters/SelectFilters';
 
 import { getDates, getSelectOptions, getSortKeys } from '@/shared/data.utils';
 
-import { useSearch } from '@/hooks/useSearch';
 import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Shipments.module.scss';
 import ArrivalTab from './arrival-tab/ArrivalTab';
-import { IArrivalData } from './arrival-tab/arrival-tab.interface';
+import {
+	IArrivalData,
+	IShipmentsData
+} from './arrival-tab/arrival-tab.interface';
 import AvailableTab from './available-tab/AvailableTab';
 import { ICardShipment } from './available-tab/card-shipment/card-shipment.interface';
 import SearchTracking from './header/search-tracking/SearchTracking';
-import { Source } from '@/services/tracking.service';
+import { Source, TrackingService } from '@/services/tracking.service';
 
 export type ShipmentsType = IArrivalData | ICardShipment;
 
 const Shipments: FC = () => {
 	const {
+		activeCategory,
+		setActiveCategory,
 		handleSearch,
 		handleSortBy,
 		handleChangeDepartment,
@@ -27,14 +34,36 @@ const Shipments: FC = () => {
 		handleChangeDate,
 		searchParamsWithDebounce
 	} = useSearchParams();
-	const [shipments, setShipments] = useState<ShipmentsType[]>([]);
-	const [arrivalLength, setArrivalLength] = useState<number>(0);
-	const [availableLength, setAvailableLength] = useState<number>(0);
+	const [shipmentsData, setShipmentsData] = useState<IShipmentsData>(
+		{} as IShipmentsData
+	);
+	// const [arrivalLength, setArrivalLength] = useState<number>(0);
+	// const [availableLength, setAvailableLength] = useState<number>(0);
 
-	const [activeTab, setActiveTab] = useState<Source>(Source.Arrival);
-	const dates = getDates(shipments || []);
+	// const [activeTab, setActiveTab] = useState<Source>(Source.Arrival);
 
-	const sort = getSortKeys(shipments || []);
+	const dates = getDates(shipmentsData?.shipments || []);
+	const { isSuccess, data } = useQuery(
+		['search arrival', searchParamsWithDebounce],
+		() => TrackingService.getArrival(searchParamsWithDebounce),
+		{ select: ({ data }) => data }
+	);
+	useEffect(() => {
+		console.log('----------from useEffect in shipments', data);
+	}, [searchParamsWithDebounce]);
+
+	const sort = getSortKeys(shipmentsData?.shipments || []);
+
+	const counts: { [key: string]: string } =
+		shipmentsData?.categoryCount?.reduce(function (result, item) {
+			const key = Object.keys(item)[0] as keyof typeof item; //first property: a, b, c
+			result[key] = item[key];
+			return result;
+		}, {});
+
+	function availableHandler(event: MouseEvent<HTMLButtonElement>) {
+		setActiveCategory(Source.Available);
+	}
 
 	return (
 		<div className={styles.shipments}>
@@ -47,28 +76,28 @@ const Shipments: FC = () => {
 				<div className={styles.leftSide}>
 					<span>Shipments</span>
 					<button
-						onClick={() => setActiveTab(Source.Arrival)}
+						onClick={() => setActiveCategory(Source.Arrival)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === Source.Arrival
+							[styles.activeTab]: activeCategory === Source.Arrival
 						})}
 					>
-						Arrival({arrivalLength})
+						Arrival({counts?.Arrival})
 					</button>
 					<button
-						onClick={() => setActiveTab(Source.Available)}
+						onClick={() => setActiveCategory(Source.Available)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === Source.Available
+							[styles.activeTab]: activeCategory === Source.Available
 						})}
 					>
-						Available({availableLength})
+						Available({counts?.Available})
 					</button>
 					<button
-						onClick={() => setActiveTab(Source.Departure)}
+						onClick={() => setActiveCategory(Source.Departure)}
 						className={clsx(styles.button, {
-							[styles.activeTab]: activeTab === Source.Departure
+							[styles.activeTab]: activeCategory === Source.Departure
 						})}
 					>
-						Departure(32)
+						Departure({counts?.Departure})
 					</button>
 				</div>
 				<div className={styles.rightSide}>
@@ -90,20 +119,20 @@ const Shipments: FC = () => {
 					/>
 				</div>
 			</div>
-			{activeTab === Source.Arrival ? (
+			{activeCategory === Source.Arrival ? (
 				<>
 					<ArrivalTab
 						handleSort={handleSortBy}
 						searchParams={searchParamsWithDebounce}
-						setShipments={setShipments}
-						setArrivalLength={setArrivalLength}
+						setShipments={setShipmentsData}
+						// setArrivalLength={setArrivalLength}
 					/>
 				</>
-			) : activeTab === Source.Available ? (
+			) : activeCategory === Source.Available ? (
 				<AvailableTab
-					setShipments={setShipments}
+					setShipments={setShipmentsData}
 					searchParams={searchParamsWithDebounce}
-					setAvailableLength={setAvailableLength}
+					// setAvailableLength={setAvailableLength}
 				/>
 			) : (
 				<></>
