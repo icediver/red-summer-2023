@@ -18,21 +18,21 @@ export interface ISearchParam {
 }
 
 export enum Source {
-	Arrival = 'getArrival',
-	Available = 'getAvailable',
-	Departure = 'getDeparture'
+	Arrival = 1,
+	Available = 2,
+	Departure = 3
 }
 
 export const TrackingService = {
 	async getArrival(queryData = {} as TypeDataFilters) {
 		console.log('getArrival');
-		console.log('from service queryData', queryData);
+		// console.log('from service queryData', queryData);
 
 		return axiosClassic<IShipmentsData>({
 			// url: 'arrival',
 			url: 'trucks',
 			method: 'GET',
-			params: { ...queryData, category: 1 }
+			params: queryData
 		});
 	},
 	async getAvailable(queryData = {} as TypeShipmentsAvailableFilter) {

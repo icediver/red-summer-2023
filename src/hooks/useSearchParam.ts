@@ -1,8 +1,10 @@
 import { ChangeEvent, useMemo, useState } from 'react';
 import { OnChangeValue } from 'react-select';
 
+import { IOption } from '@/ui/select-filters/select.types';
+
 import { useDebounce } from './useDebounce';
-import { IOption } from '@/data/cities';
+import { Source } from '@/services/tracking.service';
 import { TypeDataFilters } from '@/services/tracking.types';
 
 export const useSearchParams = () => {
@@ -11,15 +13,17 @@ export const useSearchParams = () => {
 	const [department, setDepartment] = useState('');
 	const [date, setDate] = useState('');
 	const [sort, setSort] = useState('');
+	const [activeCategory, setActiveCategory] = useState<Source>(Source.Arrival);
 	const searchParam = useMemo(
 		() => ({
 			number,
 			city,
 			department,
 			date,
-			sort
+			sort,
+			category: String(activeCategory)
 		}),
-		[number, city, department, date, sort]
+		[number, city, department, date, sort, activeCategory]
 	);
 
 	const searchParamsWithDebounce: TypeDataFilters = useDebounce(
@@ -50,6 +54,8 @@ export const useSearchParams = () => {
 		else setSort((newValue as IOption)?.value);
 	};
 	return {
+		activeCategory,
+		setActiveCategory,
 		handleSearch,
 		handleChangeCity,
 		handleChangeDepartment,

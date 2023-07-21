@@ -9,8 +9,8 @@ import { TrackingService } from '@/services/tracking.service';
 const ArrivalTab: FC<IArrivalTab> = ({
 	handleSort,
 	searchParams,
-	setShipments,
-	setArrivalLength
+	setShipments
+	// setArrivalLength
 }) => {
 	const { isSuccess, data } = useQuery(
 		['search arrival', searchParams],
@@ -22,7 +22,7 @@ const ArrivalTab: FC<IArrivalTab> = ({
 	useEffect(() => {
 		if (data) {
 			setShipments(data);
-			setArrivalLength(data.categoryCount[0]['Arrival']);
+			// setArrivalLength(data.categoryCount[0]['Arrival']);
 		}
 	}, [data]);
 	return (

@@ -23,7 +23,6 @@ export interface IArrivalData {
 export interface IShipmentsTable {
 	searchParams: TypeDataFilters;
 	setShipments: Dispatch<SetStateAction<IShipmentsData>>;
-	setArrivalLength: Dispatch<SetStateAction<number>>;
 }
 export interface IArrivalTab extends IShipmentsTable {
 	handleSort: (newValue: OnChangeValue<IOption, boolean> | string) => void;
