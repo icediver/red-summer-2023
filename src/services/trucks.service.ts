@@ -6,6 +6,7 @@ import {
 } from './tracking.types';
 import {
 	IArrivalData,
+	IParcel,
 	IShipmentsData
 } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
@@ -26,8 +27,9 @@ export enum Source {
 export const TruckService = {
 	async getAll(queryData = {} as TypeDataFilters) {
 		console.log('getArrival');
-		return axiosClassic<IShipmentsData[]>({
-			url: 'arrival',
+		console.log(queryData);
+		return axiosClassic<IShipmentsData>({
+			url: 'trucks',
 			method: 'GET',
 			params: queryData
 		});
@@ -42,7 +44,7 @@ export const TruckService = {
 	},
 	async getAvailableByNumber(number: string) {
 		console.log('getAvailableByNumber');
-		return axiosClassic.get<ICardShipment[]>(`/available/${number}`);
+		return axiosClassic.get<ICardShipment>(`/trucks/${number}`);
 	},
 	async getDeparture(queryData = {} as TypeDataFilters) {
 		console.log('getDeparture');
@@ -53,6 +55,6 @@ export const TruckService = {
 		});
 	},
 	async getAvailablePackages() {
-		return axiosClassic<IAvailablePackage[]>('/packages');
+		return axiosClassic<IParcel[]>('/packages');
 	}
 };

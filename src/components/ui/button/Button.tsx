@@ -6,13 +6,19 @@ import styles from './Button.module.scss';
 interface IButton {
 	className?: string;
 	variant?: 'first' | 'second';
+	onClick: () => void;
 }
-const Button: FC<PropsWithChildren<IButton>> = (
-	{ children, className, variant = 'first' },
+const Button: FC<PropsWithChildren<IButton>> = ({
+	children,
+	className,
+	variant = 'first',
 	onClick
-) => {
+}) => {
 	return (
-		<button className={clsx(styles.button, className, styles[variant])}>
+		<button
+			onClick={onClick}
+			className={clsx(styles.button, className, styles[variant])}
+		>
 			{children}
 		</button>
 	);

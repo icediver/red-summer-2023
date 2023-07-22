@@ -21,8 +21,8 @@ export const ShipmentsService = {
 						searchTerm.date
 							? {
 									departureDate: {
-										gte: getDate(searchTerm.date).start,
-										lte: getDate(searchTerm.date).end
+										gte: getDateRange(searchTerm.date).start,
+										lte: getDateRange(searchTerm.date).end
 									}
 							  }
 							: {},
@@ -35,11 +35,15 @@ export const ShipmentsService = {
 
 		try {
 			const shipments = await prisma.truck.findMany({
-				where: prismaSearchTermFilter
+				where: prismaSearchTermFilter,
+				include: { parcels: true }
 			});
 			const categoryCount = await prisma.category
 				.findMany({
-					select: { name: true, _count: { select: { trucks: true } } }
+					select: {
+						name: true,
+						_count: { select: { trucks: true } }
+					}
 				})
 				.then(res => {
 					return res.map(({ name, _count }) => {
@@ -52,6 +56,7 @@ export const ShipmentsService = {
 			console.log(e);
 		}
 	},
+
 	async getByTrackNumber(trackNumber: string) {
 		try {
 			const arrival = await prisma.truck.findUnique({
@@ -176,6 +181,15 @@ export const ShipmentsService = {
 			console.log(e);
 		}
 	},
+	async getAllParcels() {
+		try {
+			const parcels = await prisma.parcel.findMany({});
+			console.log(parcels);
+			return NextResponse.json(parcels);
+		} catch (e) {
+			throw new Error('Not found');
+		}
+	},
 	async getParcelById(id: number) {
 		try {
 			const arrival = await prisma.parcel.findUnique({
@@ -187,7 +201,8 @@ export const ShipmentsService = {
 		}
 	}
 };
-const getDate = (date: string) => {
+
+const getDateRange = (date: string) => {
 	const interval = {
 		start: new Date(date.split('T')[0] + 'T00:00:00.000Z'),
 		end: new Date(date.split('T')[0] + 'T23:59:59.000Z')

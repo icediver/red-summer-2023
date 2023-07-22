@@ -17,10 +17,10 @@ import { TbBox } from 'react-icons/tb';
 
 import Button from '@/ui/button/Button';
 
+import { IParcel } from '../arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '../available-tab/card-shipment/card-shipment.interface';
 
 import styles from './TruckLoading.module.scss';
-import { IAvailablePackage } from './available-package.interface';
 import AvailablePackages from './available-packages/AvailablePackages';
 import CardLoading from './available-packages/card-loading/CardLoading';
 import ErrorModal from './available-packages/error-modal/ErrorModal';
@@ -29,7 +29,7 @@ import { useTruckLoading } from './useTruckLoading';
 
 const TruckLoading: FC<{
 	data: ICardShipment;
-	packages: IAvailablePackage[];
+	packages: IParcel[];
 }> = ({ data, packages }) => {
 	const {
 		onDragEnterHandler,
@@ -45,6 +45,8 @@ const TruckLoading: FC<{
 		setIsErrorModalOpen,
 		status
 	} = useTruckLoading(data);
+
+	const [isViewParcelsList, setIsViewParcelsList] = useState<boolean>(false);
 	return (
 		<div className={styles.container} onMouseUp={() => setIsShowParcel(false)}>
 			<div className={styles.header}>
@@ -52,24 +54,25 @@ const TruckLoading: FC<{
 					Shipments / <span>{data.number}</span>
 				</div>
 				<div className={styles.title}>
-					{data.route}, {data.number}
-					<span className={styles.departure}>{data.departure}</span>
+					{data.destination}, {data.number}
+					<span className={styles.departure}>{data.departureDate}</span>
 				</div>
 			</div>
 
 			<div className={styles.loading}>
 				<div className={styles.leftSide}>
 					<div onDragEnter={() => console.log('onDragEnter')}>
-						{truck.available && <CardLoading {...truck} />}
+						<CardLoading {...truck} />
 						<CargoSpace onDropHandler={onDropHandler} status={status} />
 					</div>
 					<div className={styles.footer}>
 						<Button
 							variant='second'
 							className='w-full hover:bg-primary hover:text-white'
+							onClick={() => setIsViewParcelsList(!isViewParcelsList)}
 						>
 							<TbBox size={18} />
-							View parcels list
+							{isViewParcelsList ? 'Available parcels' : 'View parcels list'}
 						</Button>
 						<Link
 							href={'/'}
@@ -82,7 +85,7 @@ const TruckLoading: FC<{
 				</div>
 				<div onMouseDown={onMouseDownHandler} className={styles.rightSide}>
 					<AvailablePackages
-						packages={packages}
+						packages={isViewParcelsList ? truck.parcels : packages}
 						selectedParcels={selectedParcels}
 						setSelectedParcels={setSelectedParcels}
 					/>

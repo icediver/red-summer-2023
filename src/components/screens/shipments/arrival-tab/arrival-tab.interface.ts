@@ -17,7 +17,15 @@ export interface IArrivalData {
 	arrivalDate: string;
 	delay: string;
 	department: string;
+	parcels: IParcel[];
 	category: string;
+}
+export interface IParcel {
+	id: string;
+	parcelNumber: string;
+	volumeWeight: number;
+	admissionDate: string;
+	truckId: string;
 }
 
 export interface IShipmentsTable {

@@ -1,11 +1,13 @@
+import { IParcel } from '../../arrival-tab/arrival-tab.interface';
+
 export interface ICardShipment {
-	route: string;
-	departure: string;
-	available: number;
+	destination: string;
+	departureDate: string;
+	parcels: IParcel[];
 	number: string;
-	truck: string;
+	model: string;
 	capacity: number;
-	department: string;
+	department: number;
 }
 
 export interface IItemsCardShipment {

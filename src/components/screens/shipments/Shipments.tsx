@@ -44,7 +44,7 @@ const Shipments: FC = () => {
 
 	const dates = getDates(shipmentsData?.shipments || []);
 	const { isSuccess, data } = useQuery(
-		['search arrival', searchParamsWithDebounce],
+		['get shipments', searchParamsWithDebounce],
 		() => TrackingService.getArrival(searchParamsWithDebounce),
 		{ select: ({ data }) => data }
 	);
@@ -55,11 +55,11 @@ const Shipments: FC = () => {
 	const sort = getSortKeys(shipmentsData?.shipments || []);
 
 	const counts: { [key: string]: string } =
-		shipmentsData?.categoryCount?.reduce(function (result, item) {
+		data?.categoryCount?.reduce(function (result, item) {
 			const key = Object.keys(item)[0] as keyof typeof item; //first property: a, b, c
 			result[key] = item[key];
 			return result;
-		}, {});
+		}, {}) || {};
 
 	function availableHandler(event: MouseEvent<HTMLButtonElement>) {
 		setActiveCategory(Source.Available);
@@ -123,16 +123,18 @@ const Shipments: FC = () => {
 				<>
 					<ArrivalTab
 						handleSort={handleSortBy}
-						searchParams={searchParamsWithDebounce}
-						setShipments={setShipmentsData}
+						shipments={data?.shipments || []}
+						// searchParams={searchParamsWithDebounce}
+						// setShipments={setShipmentsData}
 						// setArrivalLength={setArrivalLength}
 					/>
 				</>
 			) : activeCategory === Source.Available ? (
 				<AvailableTab
-					setShipments={setShipmentsData}
-					searchParams={searchParamsWithDebounce}
+					// setShipments={setShipmentsData}
+					// searchParams={searchParamsWithDebounce}
 					// setAvailableLength={setAvailableLength}
+					shipments={data?.shipments || []}
 				/>
 			) : (
 				<></>

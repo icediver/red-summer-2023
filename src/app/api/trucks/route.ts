@@ -1,6 +1,3 @@
-import { Category, PrismaClient, Truck } from '@prisma/client';
-import { NextResponse } from 'next/server';
-
 import { ShipmentsService } from '../services/shipments.service';
 
 export interface ISearchTerm {

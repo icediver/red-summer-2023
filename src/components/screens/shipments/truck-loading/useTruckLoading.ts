@@ -8,15 +8,12 @@ import {
 	DragEventHandler
 } from 'react';
 
+import { IParcel } from '../arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '../available-tab/card-shipment/card-shipment.interface';
-
-import { IAvailablePackage } from './available-package.interface';
 
 export const useTruckLoading = (data: ICardShipment) => {
 	const [isShowParcel, setIsShowParcel] = useState<boolean>(false);
-	const [selectedParcels, setSelectedParcels] = useState<IAvailablePackage[]>(
-		[]
-	);
+	const [selectedParcels, setSelectedParcels] = useState<IParcel[]>([]);
 	const [status, setStatus] = useState('empty');
 	const [truck, setTruck] = useState<ICardShipment>({} as ICardShipment);
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
@@ -39,16 +36,19 @@ export const useTruckLoading = (data: ICardShipment) => {
 	};
 
 	const onDropHandler: DragEventHandler<HTMLDivElement> = event => {
-		// console.log(event.currentTarget.className === styles['fully']);
+		const loadingWeight = truck.parcels.reduce(
+			(acc, parcel) => acc + parcel.volumeWeight,
+			0
+		);
 
 		const aditionalVolume = selectedParcels.reduce(
 			(sum, el) => sum + el.volumeWeight,
 			0
 		);
-		const available = truck.available + aditionalVolume;
+		const available = loadingWeight + aditionalVolume;
 		setIsShowParcel(false);
 		if (available <= truck.capacity) {
-			setTruck({ ...truck, available });
+			setTruck({ ...truck, parcels: [...truck.parcels, ...selectedParcels] });
 			setStatus('active');
 		} else setIsErrorModalOpen(true);
 	};

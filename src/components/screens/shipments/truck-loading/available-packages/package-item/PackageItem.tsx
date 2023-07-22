@@ -1,4 +1,5 @@
 import { useIsFetching } from '@tanstack/react-query';
+import clsx from 'clsx';
 import {
 	FC,
 	useEffect,
@@ -8,35 +9,53 @@ import {
 	ChangeEventHandler,
 	ChangeEvent,
 	Dispatch,
-	SetStateAction
+	SetStateAction,
+	MouseEventHandler
 } from 'react';
 import { GrDropbox } from 'react-icons/gr';
 
 import { IAvailablePackage } from '../../available-package.interface';
 
 import styles from './PackageItem.module.scss';
+import { IParcel } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 
 const PackageItem: FC<{
-	parcel: IAvailablePackage;
-	selectedParcels: IAvailablePackage[];
-	setSelectedParcels: Dispatch<SetStateAction<IAvailablePackage[]>>;
+	parcel: IParcel;
+	selectedParcels: IParcel[];
+	setSelectedParcels: Dispatch<SetStateAction<IParcel[]>>;
 }> = ({ parcel, selectedParcels, setSelectedParcels }) => {
 	// const { parcelNumber, volumeWeight, admissionDate } = parcel;
+	const [isSelected, setIsSelected] = useState<boolean>(false);
 	const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (
 		event: ChangeEvent
 	) => {
-		if (selectedParcels.some(pack => pack.parcelNumber === parcel.parcelNumber))
+		if (
+			selectedParcels.some(pack => pack.parcelNumber === parcel.parcelNumber)
+		) {
 			setSelectedParcels([
 				...selectedParcels.filter(
 					pack => pack.parcelNumber !== parcel.parcelNumber
 				)
 			]);
-		else setSelectedParcels([...selectedParcels, parcel]);
+			setIsSelected(false);
+		} else {
+			setSelectedParcels([...selectedParcels, parcel]);
+			setIsSelected(true);
+		}
 	};
 	return (
-		<div className={styles.container}>
-			<div className={styles.parcelNumber}>
+		<label
+			onMouseDown={e => {
+				if (!isSelected) e.stopPropagation();
+			}}
+			className={clsx(styles.container, { [styles.selected]: isSelected })}
+		>
+			<div
+				className={styles.parcelNumber}
+				// onClick={onChangeHandler}
+			>
 				<input
+					id='check-parcel'
 					type='checkbox'
 					onMouseDown={e => e.stopPropagation()}
 					onChange={onChangeHandler}
@@ -44,8 +63,16 @@ const PackageItem: FC<{
 				{parcel?.parcelNumber}
 			</div>
 			<div className={styles.weight}>{parcel?.volumeWeight}</div>
-			<div>{parcel?.admissionDate}</div>
-		</div>
+			<div>
+				{new Date(parcel?.admissionDate).toLocaleString('en-Us', {
+					day: 'numeric',
+					month: 'short',
+					hour: '2-digit',
+					hour12: false,
+					minute: '2-digit'
+				})}
+			</div>
+		</label>
 	);
 };
 export default PackageItem;

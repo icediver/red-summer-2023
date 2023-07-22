@@ -1,15 +1,14 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 
-import { IAvailablePackage } from '../available-package.interface';
+import { IParcel } from '../../arrival-tab/arrival-tab.interface';
 
 import styles from './AvailablePackages.module.scss';
-import ErrorModal from './error-modal/ErrorModal';
 import PackageItem from './package-item/PackageItem';
 
 const AvailablePackages: FC<{
-	packages: IAvailablePackage[];
-	selectedParcels: IAvailablePackage[];
-	setSelectedParcels: Dispatch<SetStateAction<IAvailablePackage[]>>;
+	packages: IParcel[];
+	selectedParcels: IParcel[];
+	setSelectedParcels: Dispatch<SetStateAction<IParcel[]>>;
 }> = ({ packages, selectedParcels, setSelectedParcels }) => {
 	return (
 		<div className={styles.wrapper}>
@@ -33,7 +32,7 @@ const AvailablePackages: FC<{
 								input.indeterminate = true;
 							}
 						}}
-						onChange={() => setSelectedParcels([{} as IAvailablePackage])}
+						onChange={() => setSelectedParcels([{} as IParcel])}
 						onMouseDown={e => e.stopPropagation()}
 					/>
 					Parcel number

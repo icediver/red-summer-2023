@@ -10,7 +10,11 @@ import truckImage from '@/assets/images/track.png';
 import styles from './CardLoading.module.scss';
 import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
 
-const CardLoading: FC<ICardShipment> = ({ available, capacity }) => {
+const CardLoading: FC<ICardShipment> = ({ parcels = [], capacity }) => {
+	const available = parcels?.reduce(
+		(acc, parcel) => acc + parcel.volumeWeight,
+		0
+	);
 	const percent = Math.round((+available / capacity) * 100);
 
 	const color = percent <= 30 ? 'green' : percent <= 60 ? 'yellow' : 'red';
@@ -47,9 +51,9 @@ const CardLoading: FC<ICardShipment> = ({ available, capacity }) => {
 						<div className={styles.progress}>
 							<div
 								className={clsx(styles.total, styles[colorLoading], {
-									// [styles.green]: percent <= 30,
-									// [styles.yellow]: 30 < percent && percent < 70,
-									// [styles.red]: percent >= 70
+									[styles.green]: percent <= 30,
+									[styles.yellow]: 30 < percent && percent < 70,
+									[styles.red]: percent >= 70
 								})}
 								style={width}
 							></div>
