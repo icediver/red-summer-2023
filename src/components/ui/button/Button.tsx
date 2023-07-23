@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 interface IButton {
 	className?: string;
 	variant?: 'first' | 'second';
-	onClick: () => void;
+	onClick?: () => void;
 }
 const Button: FC<PropsWithChildren<IButton>> = ({
 	children,

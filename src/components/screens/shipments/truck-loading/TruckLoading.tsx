@@ -1,16 +1,7 @@
 'use client';
 
-import clsx from 'clsx';
 import Link from 'next/link';
-import {
-	FC,
-	useState,
-	MouseEvent,
-	DragEventHandler,
-	MouseEventHandler,
-	useEffect
-} from 'react';
-import { FaCloudscale } from 'react-icons/fa';
+import { FC, useState } from 'react';
 import { GrDropbox } from 'react-icons/gr';
 import { PiTruck } from 'react-icons/pi';
 import { TbBox } from 'react-icons/tb';
@@ -53,10 +44,12 @@ const TruckLoading: FC<{
 				<div className={styles.breadCrumb}>
 					Shipments / <span>{data.number}</span>
 				</div>
-				<div className={styles.title}>
+				<span className={styles.title}>
 					{data.destination}, {data.number}
-					<span className={styles.departure}>{data.departureDate}</span>
-				</div>
+					<span className={styles.departure}>
+						{new Date(data?.departureDate).toLocaleString('ru-Ru')}
+					</span>
+				</span>
 			</div>
 
 			<div className={styles.loading}>
