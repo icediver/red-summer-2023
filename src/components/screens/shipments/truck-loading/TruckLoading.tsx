@@ -1,7 +1,8 @@
 'use client';
 
+import { useMutation } from '@tanstack/react-query';
 import Link from 'next/link';
-import { FC, useState } from 'react';
+import { FC, SetStateAction, useEffect, useState } from 'react';
 import { GrDropbox } from 'react-icons/gr';
 import { PiTruck } from 'react-icons/pi';
 import { TbBox } from 'react-icons/tb';
@@ -13,10 +14,12 @@ import { ICardShipment } from '../available-tab/card-shipment/card-shipment.inte
 
 import styles from './TruckLoading.module.scss';
 import AvailablePackages from './available-packages/AvailablePackages';
+import ParcelsList from './available-packages/ParcelsList';
 import CardLoading from './available-packages/card-loading/CardLoading';
 import ErrorModal from './available-packages/error-modal/ErrorModal';
 import CargoSpace from './cargo-space/CargoSpace';
 import { useTruckLoading } from './useTruckLoading';
+import { TruckService } from '@/services/trucks.service';
 
 const TruckLoading: FC<{
 	data: ICardShipment;
@@ -38,6 +41,13 @@ const TruckLoading: FC<{
 	} = useTruckLoading(data);
 
 	const [isViewParcelsList, setIsViewParcelsList] = useState<boolean>(false);
+	const [loadingParcels, setLoadingParcels] = useState<IParcel[]>([]);
+
+	const { mutateAsync, error } = useMutation(
+		['load in truck'],
+		(parcelsId: number[]) => TruckService.loadParcels(parcelsId, truck.number)
+	);
+
 	return (
 		<div className={styles.container} onMouseUp={() => setIsShowParcel(false)}>
 			<div className={styles.header}>
@@ -55,8 +65,16 @@ const TruckLoading: FC<{
 			<div className={styles.loading}>
 				<div className={styles.leftSide}>
 					<div onDragEnter={() => console.log('onDragEnter')}>
-						<CardLoading {...truck} />
-						<CargoSpace onDropHandler={onDropHandler} status={status} />
+						{truck && (
+							<>
+								<CardLoading {...truck} />
+								<CargoSpace
+									onDropHandler={onDropHandler}
+									status={status}
+									truck={data}
+								/>
+							</>
+						)}{' '}
 					</div>
 					<div className={styles.footer}>
 						<Button
@@ -70,6 +88,9 @@ const TruckLoading: FC<{
 						<Link
 							href={'/'}
 							className='w-full hover:bg-primary hover:text-white bg-primary/20 rounded-md text-primary text-xs flex justify-center items-center gap-4'
+							onClick={() =>
+								mutateAsync(loadingParcels.map(parcel => +parcel.id))
+							}
 						>
 							<PiTruck size={18} />
 							Finish loading
@@ -77,11 +98,18 @@ const TruckLoading: FC<{
 					</div>
 				</div>
 				<div onMouseDown={onMouseDownHandler} className={styles.rightSide}>
-					<AvailablePackages
-						packages={isViewParcelsList ? truck.parcels : packages}
-						selectedParcels={selectedParcels}
-						setSelectedParcels={setSelectedParcels}
-					/>
+					{isViewParcelsList ? (
+						<ParcelsList
+							packages={truck.parcels}
+							setLoadingParcels={setLoadingParcels}
+						/>
+					) : (
+						<AvailablePackages
+							packages={packages}
+							selectedParcels={selectedParcels}
+							setSelectedParcels={setSelectedParcels}
+						/>
+					)}
 					{isShowParcel && (
 						<div
 							className={styles.parcel}

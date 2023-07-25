@@ -1,0 +1,28 @@
+.menuItem {
+	@apply my-1 grid grid-cols-10 items-center bg-white px-2 py-0.5 text-xs;
+	.dataNumber {
+		@apply col-span-2 py-2;
+	}
+	.dataTruck {
+		@apply col-span-2;
+	}
+	.dataWeight {
+		@apply col-span-1;
+	}
+
+	.dataDestination {
+		@apply col-span-2;
+	}
+
+	.dataStatus {
+	}
+	.Delayed {
+		@apply w-20 rounded bg-error-color/10 text-center text-error-color;
+	}
+	.On_way {
+		@apply w-20 rounded bg-warning/10  text-center text-warning;
+	}
+	.Arrived {
+		@apply w-20 rounded bg-secondary/10 p-1 text-center text-secondary;
+	}
+}

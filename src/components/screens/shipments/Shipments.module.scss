@@ -17,7 +17,7 @@
 			}
 			@apply flex flex-row items-center justify-start gap-2;
 			.button {
-				@apply mr-3 rounded-md bg-primary/20 px-3 py-2 text-xs  text-primary;
+				@apply mr-3 w-28 rounded-md bg-primary/20 px-3 py-2 text-xs  text-primary;
 			}
 			.activeTab {
 				@apply bg-primary text-white/60;

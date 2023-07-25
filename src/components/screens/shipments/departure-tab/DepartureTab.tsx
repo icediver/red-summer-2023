@@ -1,13 +1,14 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { OnChangeValue } from 'react-select';
 
 import { IOption } from '@/ui/select-filters/select.types';
 
-import { IArrivalData, IArrivalTab } from './arrival-tab.interface';
+import { IArrivalData } from '../arrival-tab/arrival-tab.interface';
+
 import ShipmentsTableHeader from './shipments-header/ShipmentsHeader';
 import ShipmentsTable from './shipments-table/ShipmentsTable';
 
-const ArrivalTab: FC<{
+const DepartureTab: FC<{
 	shipments: IArrivalData[];
 	handleSort: (newValue: OnChangeValue<IOption, boolean> | string) => void;
 }> = ({ shipments, handleSort }) => {
@@ -18,4 +19,4 @@ const ArrivalTab: FC<{
 		</>
 	);
 };
-export default ArrivalTab;
+export default DepartureTab;

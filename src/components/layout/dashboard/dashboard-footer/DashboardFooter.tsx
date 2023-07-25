@@ -16,7 +16,6 @@ import styles from './DashboardFooter.module.scss';
 const DashboardFooter: FC = () => {
 	const { ref, isShow, setIsShow } = useOutside(false);
 	const { data } = useSession();
-	console.log(data);
 	return (
 		<div className={styles.footer}>
 			<Button className='mx-auto  w-[250px]'>

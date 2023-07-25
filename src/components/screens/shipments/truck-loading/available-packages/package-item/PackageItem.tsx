@@ -1,31 +1,34 @@
-import { useIsFetching } from '@tanstack/react-query';
+'use client';
+
 import clsx from 'clsx';
 import {
 	FC,
-	useEffect,
 	useState,
-	MouseEvent,
-	useRef,
 	ChangeEventHandler,
 	ChangeEvent,
 	Dispatch,
 	SetStateAction,
-	MouseEventHandler
+	useEffect
 } from 'react';
-import { GrDropbox } from 'react-icons/gr';
-
-import { IAvailablePackage } from '../../available-package.interface';
 
 import styles from './PackageItem.module.scss';
 import { IParcel } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
+import { TruckService } from '@/services/trucks.service';
 
 const PackageItem: FC<{
 	parcel: IParcel;
+	isTruck?: boolean;
 	selectedParcels: IParcel[];
 	setSelectedParcels: Dispatch<SetStateAction<IParcel[]>>;
-}> = ({ parcel, selectedParcels, setSelectedParcels }) => {
-	// const { parcelNumber, volumeWeight, admissionDate } = parcel;
+}> = ({ parcel, selectedParcels, setSelectedParcels, isTruck = false }) => {
 	const [isSelected, setIsSelected] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (isTruck) {
+			setIsSelected(true);
+		}
+	}, []);
+
 	const onChangeHandler: ChangeEventHandler<HTMLInputElement> = (
 		event: ChangeEvent
 	) => {
@@ -37,28 +40,27 @@ const PackageItem: FC<{
 					pack => pack.parcelNumber !== parcel.parcelNumber
 				)
 			]);
-			setIsSelected(false);
 		} else {
 			setSelectedParcels([...selectedParcels, parcel]);
-			setIsSelected(true);
 		}
 	};
 	return (
 		<label
 			onMouseDown={e => {
-				if (!isSelected) e.stopPropagation();
+				if (!isSelected || isTruck) e.stopPropagation();
 			}}
 			className={clsx(styles.container, { [styles.selected]: isSelected })}
 		>
-			<div
-				className={styles.parcelNumber}
-				// onClick={onChangeHandler}
-			>
+			<div className={styles.parcelNumber}>
 				<input
 					id='check-parcel'
 					type='checkbox'
+					checked={isSelected}
 					onMouseDown={e => e.stopPropagation()}
-					onChange={onChangeHandler}
+					onChange={(event: ChangeEvent<HTMLInputElement>) => {
+						onChangeHandler(event);
+						setIsSelected(!isSelected);
+					}}
 				/>
 				{parcel?.parcelNumber}
 			</div>

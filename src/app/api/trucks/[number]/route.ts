@@ -16,7 +16,8 @@ export async function PATCH(
 	req: Request,
 	{ params }: { params: { number: string } }
 ) {
-	const { parcelsId } = await req.json();
+	const parcelsId = await req.json();
+
 	const number = params.number;
 	const parcels = parcelsId.map((el: number) => ({ id: el }));
 	return ShipmentsService.addParcelsToTruck(number, parcels);

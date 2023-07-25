@@ -1,8 +1,6 @@
 import Layout from '@/components/layout/layout/Layout';
 
-import { ShipmentsService } from '@/app/api/services/shipments.service';
 import TruckLoading from '@/screens/shipments/truck-loading/TruckLoading';
-import { TrackingService } from '@/services/tracking.service';
 import { TruckService } from '@/services/trucks.service';
 
 export default async function Page({
@@ -11,7 +9,6 @@ export default async function Page({
 	params: { number: string };
 }) {
 	const { props } = await getData(number);
-	console.log(props);
 	return (
 		<Layout>
 			{props && <TruckLoading data={props.data} packages={props.packages} />}

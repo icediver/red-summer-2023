@@ -28,7 +28,7 @@ export const useSearchParams = () => {
 
 	const searchParamsWithDebounce: TypeDataFilters = useDebounce(
 		searchParam,
-		500
+		50
 	);
 
 	const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {

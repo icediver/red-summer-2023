@@ -25,6 +25,5 @@ export async function GET(req: Request) {
 		department: +department,
 		sortBy
 	};
-	console.log('route===', searchTerm);
 	return ShipmentsService.getAll(searchTerm);
 }

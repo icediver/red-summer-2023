@@ -27,7 +27,6 @@ export enum Source {
 export const TruckService = {
 	async getAll(queryData = {} as TypeDataFilters) {
 		console.log('getArrival');
-		console.log(queryData);
 		return axiosClassic<IShipmentsData>({
 			url: 'trucks',
 			method: 'GET',
@@ -56,5 +55,13 @@ export const TruckService = {
 	},
 	async getAvailablePackages() {
 		return axiosClassic<IParcel[]>('/packages');
+	},
+	async deleteParcel(parcelId: number, number: string) {
+		console.log('deleteParcel');
+		return axiosClassic.delete<ICardShipment>(`/trucks/${number}/${parcelId}`);
+	},
+	async loadParcels(parcelsId: number[], number: string) {
+		console.log('loadParcel---truckService');
+		return axiosClassic.patch<ICardShipment>(`/trucks/${number}`, parcelsId);
 	}
 };

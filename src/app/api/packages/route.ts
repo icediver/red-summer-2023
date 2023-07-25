@@ -17,6 +17,7 @@ export async function GET(req: NextApiRequest, res: NextApiResponse) {
 	await documents;
 	console.log('packages route');
 	// const packages = await db.findAsync({});
-	const packages = await ShipmentsService.getAllParcels();
+	const packages = await ShipmentsService.getAvailableParcels();
+	// const packages = await ShipmentsService.getAllParcels();
 	return packages;
 }

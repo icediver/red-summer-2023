@@ -17,7 +17,7 @@ export const useTruckLoading = (data: ICardShipment) => {
 	const [status, setStatus] = useState('empty');
 	const [truck, setTruck] = useState<ICardShipment>({} as ICardShipment);
 	const [isErrorModalOpen, setIsErrorModalOpen] = useState<boolean>(false);
-	useEffect(() => console.log(selectedParcels), [selectedParcels]);
+	// useEffect(() => console.log(selectedParcels), [selectedParcels]);
 	useEffect(() => setTruck({ ...data }), []);
 
 	const [mouseCoordinates, setMouseCoordinates] = useState<{

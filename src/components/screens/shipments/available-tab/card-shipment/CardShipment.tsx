@@ -18,19 +18,11 @@ const CardShipment: FC<IArrivalData> = ({
 	number,
 	model,
 	parcels
-
-	// route,
-	// departure,
-	// available,
-	// number,
-	// truck,
-	// capacity
 }) => {
 	const available = parcels.reduce(
 		(acc, parcel) => acc + parcel.volumeWeight,
 		0
 	);
-	console.log(number, available);
 	const percent = Math.round((available / +capacity) * 100);
 	const width = { width: `${percent}%` };
 	return (

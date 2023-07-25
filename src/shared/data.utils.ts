@@ -1,24 +1,46 @@
 import { IOption } from '@/ui/select-filters/select.types';
 
 import { ShipmentsType } from '@/screens/shipments/Shipments';
+import {
+	IArrivalData,
+	IShipmentsData
+} from '@/screens/shipments/arrival-tab/arrival-tab.interface';
+import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
 
 export function getDates<T>(data: T[]) {
-	return [
+	const arrivalDateLabel = [
 		...new Set(
 			data.map((el: any) => {
-				if (el['Arrival date'] !== undefined) {
-					return el['Arrival date'].split(',')[0];
+				if (el['arrivalDate'] !== undefined) {
+					return el['arrivalDate'].split('T')[0];
+					// return new Date(el['arrivalDate']).toLocaleString('en-Us', {
+					// 	day: 'numeric',
+					// 	month: 'short',
+					// 	year: 'numeric'
+					// });
 				}
-				if (el.departure !== undefined) return el.departure.split(',')[0];
+				// if (el.departure !== undefined) return el.departure.split(',')[0];
 			})
 		)
 	];
+	return arrivalDateLabel;
+}
+
+export function getCities(data: IArrivalData[]) {
+	if (!data.length) return [];
+	const cities = [data.map((el: IArrivalData) => el.destination.split(' - '))];
+
+	return cities.flat(2).map(el => ({
+		value: el,
+		label: el
+	}));
 }
 
 export function getSortKeys(data: ShipmentsType[]) {
 	if (!data.length) return [];
-
-	return Object.keys(data[0]).filter(key => key !== '_id');
+	return Object.keys(data[0]).filter(
+		key => !['id', 'parcels', 'categoryId'].includes(key)
+	);
 }
 
 export function getSelectOptions(data: string[]): IOption[] {
@@ -28,41 +50,31 @@ export function getSelectOptions(data: string[]): IOption[] {
 	}));
 }
 
-export function sortShipmentData(data: IShipmentData[], sortBy: IOption) {
-	if (!sortBy) {
-		return data;
-	}
-	if (!data) return [];
-	return data.sort((a, b) =>
-		a[sortBy.value as keyof IShipmentData].localeCompare(
-			b[sortBy.value as keyof IShipmentData]
-		)
-	);
+export interface ISpace {
+	key: string;
+	value: string[];
 }
 
-export function sortArrival(data: IShipmentData[]) {
-	let newData: IShipmentData[] = [...data];
+export function getAvailableSpaces(truck: ICardShipment): ISpace[] {
+	const totalPlaces = truck.capacity / 12;
+	const available = truck.parcels
+		? truck.parcels?.reduce((acc, parcel) => acc + parcel.volumeWeight, 0)
+		: truck.capacity;
 
-	function sortData(this: any, sortBy: IOption) {
-		if (!sortBy) newData = [...data];
-		else
-			newData = [
-				...newData.sort((a, b) =>
-					a[sortBy.value as keyof IShipmentData].localeCompare(
-						b[sortBy.value as keyof IShipmentData]
-					)
-				)
-			];
-		return this;
-	}
-	function refresh(this: any) {
-		newData = [...data];
-		return this;
-	}
-	function print(this: any) {
-		console.log(newData);
-		return this;
-	}
+	const availablePlaces = Math.ceil(available / totalPlaces);
 
-	return { sortData, refresh, newData, print };
+	const spaces = [
+		...new Array(12 - availablePlaces).fill('empty'),
+		...new Array(availablePlaces).fill('fully')
+	].sort(() => (Math.random() > 0.5 ? 1 : -1));
+
+	const dataSpace: ISpace[] = [
+		{
+			key: 'Upper tier',
+			value: [...spaces.slice(0, 4)]
+		},
+		{ key: 'Middle tier', value: [...spaces.slice(4, 8)] },
+		{ key: 'Lower tier', value: [...spaces.slice(8, 12)] }
+	];
+	return dataSpace;
 }

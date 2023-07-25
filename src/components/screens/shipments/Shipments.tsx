@@ -2,22 +2,25 @@
 
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { FC, MouseEvent, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import SelectFilters from '@/ui/select-filters/SelectFilters';
 
-import { getDates, getSelectOptions, getSortKeys } from '@/shared/data.utils';
+import {
+	getCities,
+	getDates,
+	getSelectOptions,
+	getSortKeys
+} from '@/shared/data.utils';
 
 import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Shipments.module.scss';
 import ArrivalTab from './arrival-tab/ArrivalTab';
-import {
-	IArrivalData,
-	IShipmentsData
-} from './arrival-tab/arrival-tab.interface';
+import { IArrivalData } from './arrival-tab/arrival-tab.interface';
 import AvailableTab from './available-tab/AvailableTab';
 import { ICardShipment } from './available-tab/card-shipment/card-shipment.interface';
+import DepartureTab from './departure-tab/DepartureTab';
 import SearchTracking from './header/search-tracking/SearchTracking';
 import { Source, TrackingService } from '@/services/tracking.service';
 
@@ -34,40 +37,27 @@ const Shipments: FC = () => {
 		handleChangeDate,
 		searchParamsWithDebounce
 	} = useSearchParams();
-	const [shipmentsData, setShipmentsData] = useState<IShipmentsData>(
-		{} as IShipmentsData
-	);
-	// const [arrivalLength, setArrivalLength] = useState<number>(0);
-	// const [availableLength, setAvailableLength] = useState<number>(0);
 
-	// const [activeTab, setActiveTab] = useState<Source>(Source.Arrival);
-
-	const dates = getDates(shipmentsData?.shipments || []);
 	const { isSuccess, data } = useQuery(
 		['get shipments', searchParamsWithDebounce],
 		() => TrackingService.getArrival(searchParamsWithDebounce),
 		{ select: ({ data }) => data }
 	);
-	useEffect(() => {
-		console.log('----------from useEffect in shipments', data);
-	}, [searchParamsWithDebounce]);
 
-	const sort = getSortKeys(shipmentsData?.shipments || []);
+	const dates = getDates(data?.shipments || []);
+	const sort = getSortKeys(data?.shipments || []);
 
 	const counts: { [key: string]: string } =
 		data?.categoryCount?.reduce(function (result, item) {
-			const key = Object.keys(item)[0] as keyof typeof item; //first property: a, b, c
+			const key = Object.keys(item)[0] as keyof typeof item;
 			result[key] = item[key];
 			return result;
 		}, {}) || {};
 
-	function availableHandler(event: MouseEvent<HTMLButtonElement>) {
-		setActiveCategory(Source.Available);
-	}
-
 	return (
 		<div className={styles.shipments}>
 			<SearchTracking
+				cities={getCities(data?.shipments || [])}
 				handleSearch={handleSearch}
 				handleChangeCity={handleChangeCity}
 				handleChangeDepartment={handleChangeDepartment}
@@ -115,7 +105,6 @@ const Shipments: FC = () => {
 						variant='second'
 						instanceId='arival-date-filter'
 						handleChange={handleChangeDate}
-						// handleChange={handleChangeArrivalDate}
 					/>
 				</div>
 			</div>
@@ -124,20 +113,15 @@ const Shipments: FC = () => {
 					<ArrivalTab
 						handleSort={handleSortBy}
 						shipments={data?.shipments || []}
-						// searchParams={searchParamsWithDebounce}
-						// setShipments={setShipmentsData}
-						// setArrivalLength={setArrivalLength}
 					/>
 				</>
 			) : activeCategory === Source.Available ? (
-				<AvailableTab
-					// setShipments={setShipmentsData}
-					// searchParams={searchParamsWithDebounce}
-					// setAvailableLength={setAvailableLength}
+				<AvailableTab shipments={data?.shipments || []} />
+			) : (
+				<DepartureTab
+					handleSort={handleSortBy}
 					shipments={data?.shipments || []}
 				/>
-			) : (
-				<></>
 			)}
 		</div>
 	);

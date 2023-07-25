@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
-import { IArrivalData } from '../arrival-tab.interface';
+import { IArrivalData } from '../../arrival-tab/arrival-tab.interface';
 
 import styles from './ShipmentsTable.module.scss';
 import MenuItem from './menu-item/MenuItem';
