@@ -9,7 +9,8 @@ const nextConfig = {
 			'lh3.googleusercontent.com',
 			'avatars.githubusercontent.com',
 			'sun1-27.userapi.com',
-			'avatars.yandex.net'
+			'avatars.yandex.net',
+			'cloudflare-ipfs.com'
 		]
 	}
 };

@@ -1,5 +1,6 @@
 import { IOption } from '@/ui/select-filters/select.types';
 
+import { shipmentsRoutes } from '@/data/data';
 import { ShipmentsType } from '@/screens/shipments/Shipments';
 import {
 	IArrivalData,
@@ -78,3 +79,19 @@ export function getAvailableSpaces(truck: ICardShipment): ISpace[] {
 	];
 	return dataSpace;
 }
+
+export const getDateRange = (date: string) => {
+	const interval = {
+		start: new Date(date.split('T')[0] + 'T00:00:00.000Z'),
+		end: new Date(date.split('T')[0] + 'T23:59:59.000Z')
+	};
+	// console.log('--interval--', interval);
+	return interval;
+};
+
+export const getCoordinates = (route: string) => {
+	const city = route.split(' - ')[1].toLowerCase();
+	const coordinates = shipmentsRoutes.filter(route => route.city === city);
+
+	return coordinates;
+};

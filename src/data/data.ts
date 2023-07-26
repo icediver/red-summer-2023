@@ -138,113 +138,36 @@ export const shipmentsData: IArrivalData[] = [
 	}
 ];
 
-export const shipmentsAvailable: ICardShipment[] = [
-	{
-		route: 'Barcelona-Valencia',
-		departure: '15 Jun, 2:00 PM',
-		available: 180,
-		number: 'V435322',
-		truck: 'Iveco 80E18',
-		capacity: 200,
-		department: '1'
-	},
-	{
-		route: 'Barcelona-Seville',
-		departure: '15 Jun, 8:00 PM',
-		available: 200,
-		number: 'V890324',
-		truck: 'Iveco 80E18',
-		capacity: 400,
-		department: '1'
-	},
-	{
-		route: 'Barcelona-Seville',
-		departure: '15 Jun, 8:00 PM',
-		available: 225,
-		number: 'V423426',
-		truck: 'Iveco 90E14',
-		capacity: 300,
-		department: '1'
-	},
-	{
-		route: 'Barcelona-Cordoba',
-		departure: '15 Jun, 10:00 PM',
-		available: 60,
-		number: 'V998426',
-		truck: 'Iveco 80E21',
-		capacity: 200,
-		department: '3'
-	},
-	{
-		route: 'Barcelona-Valencia',
-		departure: '16 Jun, 10:30 PM',
-		available: 60,
-		number: 'V567722',
-		truck: 'Iveco 80E18',
-		capacity: 200,
-		department: '2'
-	}
-];
+export interface ICoor {
+	to: number[];
+	from: number[];
+}
 
-export const availablePackages: IAvailablePackage[] = [
+export interface IRoute {
+	city: string;
+	coordinates: ICoor;
+}
+
+export const shipmentsRoutes: IRoute[] = [
 	{
-		parcelNumber: 'CN1253722IM',
-		volumeWeight: 52,
-		admissionDate: '10 Jun, 8:00 AM'
+		city: 'torrelavega',
+		coordinates: {
+			to: [43.3491926787025, -4.050284623394953],
+			from: [43.31902760649984, -4.055405069331196]
+		}
 	},
 	{
-		parcelNumber: 'CN1253433IS',
-		volumeWeight: 20,
-		admissionDate: '11 Jun, 10:00 AM'
+		city: 'huelva',
+		coordinates: {
+			to: [37.26219254022244, -6.942308219398006],
+			from: [37.27152473343173, -6.987895396054435]
+		}
 	},
 	{
-		parcelNumber: 'CN1256433IM',
-		volumeWeight: 54,
-		admissionDate: '11 Jun,12:30 PM'
-	},
-	{
-		parcelNumber: 'CN1256672IM',
-		volumeWeight: 50,
-		admissionDate: '11 Jun, 6:30 PM'
-	},
-	{
-		parcelNumber: 'CN1253764IB',
-		volumeWeight: 100,
-		admissionDate: '11 Jun, 6:30 PM'
-	},
-	{
-		parcelNumber: 'CN2223722IS',
-		volumeWeight: 44,
-		admissionDate: '11 Jun, 8:44 PM'
-	},
-	{
-		parcelNumber: 'CN5433782IS',
-		volumeWeight: 22,
-		admissionDate: '12 Jun, 9:54 AM'
-	},
-	{
-		parcelNumber: 'CN1253722IS',
-		volumeWeight: 2,
-		admissionDate: '12 Jun, 9:54 AM'
-	},
-	{
-		parcelNumber: 'CN9874678IS',
-		volumeWeight: 14,
-		admissionDate: '12 Jun,10:06 AM'
-	},
-	{
-		parcelNumber: 'CN1363722IM',
-		volumeWeight: 56,
-		admissionDate: '12 Jun,10:13 AM'
-	},
-	{
-		parcelNumber: 'CN4553722IS',
-		volumeWeight: 10,
-		admissionDate: '12 Jun,11:16 AM'
-	},
-	{
-		parcelNumber: 'CN9083722IS',
-		volumeWeight: 5,
-		admissionDate: '12 Jun,11:20 AM'
+		city: 'marbella',
+		coordinates: {
+			to: [36.511192301726524, -4.887659742983759],
+			from: [36.5244153326839, -4.851442144841376]
+		}
 	}
 ];

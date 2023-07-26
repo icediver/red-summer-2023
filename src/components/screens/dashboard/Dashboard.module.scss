@@ -1,0 +1,33 @@
+.dashboard {
+	@apply -mt-2 h-full overflow-hidden  p-6;
+	.header {
+		@apply mb-4   text-xl;
+	}
+	.topRow {
+		@apply grid w-full grid-cols-4 gap-4;
+		.package {
+			@apply flex h-28 w-full items-center justify-between  rounded-md bg-white p-6;
+			.title {
+				@apply text-sm text-black-inactive;
+			}
+			.count {
+				@apply font-bold;
+			}
+			.right {
+				@apply w-1/4;
+				.frame {
+					@apply flex h-12 w-12 items-center justify-center rounded-full bg-main-bg;
+					.icon {
+						@apply text-center text-2xl;
+					}
+				}
+			}
+		}
+	}
+	.container {
+		@apply mt-4 grid h-2/3  w-full grid-cols-2 grid-rows-2 gap-4;
+		.card {
+			@apply w-full rounded-md bg-white;
+		}
+	}
+}

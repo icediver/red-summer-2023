@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import { FC } from 'react';
 
+import SearchTracking from '@/ui/search-tracking/SearchTracking';
 import SelectFilters from '@/ui/select-filters/SelectFilters';
 
 import {
@@ -21,7 +22,6 @@ import { IArrivalData } from './arrival-tab/arrival-tab.interface';
 import AvailableTab from './available-tab/AvailableTab';
 import { ICardShipment } from './available-tab/card-shipment/card-shipment.interface';
 import DepartureTab from './departure-tab/DepartureTab';
-import SearchTracking from './header/search-tracking/SearchTracking';
 import { Source, TrackingService } from '@/services/tracking.service';
 
 export type ShipmentsType = IArrivalData | ICardShipment;
@@ -71,7 +71,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeCategory === Source.Arrival
 						})}
 					>
-						Arrival({counts?.Arrival})
+						Arrival({counts?.Arrival || 0})
 					</button>
 					<button
 						onClick={() => setActiveCategory(Source.Available)}
@@ -79,7 +79,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeCategory === Source.Available
 						})}
 					>
-						Available({counts?.Available})
+						Available({counts?.Available || 0})
 					</button>
 					<button
 						onClick={() => setActiveCategory(Source.Departure)}
@@ -87,7 +87,7 @@ const Shipments: FC = () => {
 							[styles.activeTab]: activeCategory === Source.Departure
 						})}
 					>
-						Departure({counts?.Departure})
+						Departure({counts?.Departure || 0})
 					</button>
 				</div>
 				<div className={styles.rightSide}>
