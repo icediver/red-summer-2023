@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import SearchTracking from '@/ui/search-tracking/SearchTracking';
 
@@ -11,14 +11,18 @@ import { getCities } from '@/shared/data.utils';
 import { useSearchParams } from '@/hooks/useSearchParam';
 
 import styles from './Dashboard.module.scss';
+import AvailableTrucks from './cards/available-trucks/AvailableTrucks';
+import DaylyPlan from './cards/daily-plan/DaylyPlan';
 import DelayedDelivery from './cards/delayed-delivery/DelayedDelivery';
-import { TrackingService } from '@/services/tracking.service';
+import RecentRequests from './cards/recent-requests/RecentRequests';
+import { Source, TrackingService } from '@/services/tracking.service';
 
 const Dashboard: FC = () => {
 	const {
 		handleSearch,
 		handleChangeDepartment,
 		handleChangeCity,
+		setActiveCategory,
 		searchParamsWithDebounce
 	} = useSearchParams();
 
@@ -28,8 +32,14 @@ const Dashboard: FC = () => {
 		{ select: ({ data }) => data }
 	);
 
-	const delayed = data?.shipments.filter(shipment => shipment.delay !== null);
+	useEffect(() => {
+		setActiveCategory(Source.All);
+	}, []);
 
+	const delayed = data?.shipments.filter(shipment => shipment.delay !== null);
+	const available = data?.shipments.filter(shipment => {
+		return +shipment.categoryId === 2;
+	});
 	return (
 		<div className={styles.dashboard}>
 			<SearchTracking
@@ -40,7 +50,7 @@ const Dashboard: FC = () => {
 			/>
 			<div className={styles.header}>Overview</div>
 			<div className={styles.topRow}>
-				{packages.map(pack => (
+				{packages.map((pack, index) => (
 					<div className={styles.package} key={pack.title}>
 						<div>
 							<div className={styles.title}>{pack.title}</div>
@@ -58,9 +68,15 @@ const Dashboard: FC = () => {
 				<div className={styles.card}>
 					<DelayedDelivery delayed={delayed || []} />
 				</div>
-				<div className={styles.card}></div>
-				<div className={styles.card}></div>
-				<div className={styles.card}></div>
+				<div className={styles.card}>
+					<DaylyPlan />
+				</div>
+				<div className={styles.card}>
+					<AvailableTrucks available={available || []} />
+				</div>
+				<div className={styles.card}>
+					<RecentRequests />
+				</div>
 			</div>
 		</div>
 	);

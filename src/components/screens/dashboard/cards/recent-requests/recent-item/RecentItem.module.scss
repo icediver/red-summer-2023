@@ -1,0 +1,31 @@
+.availableItem {
+	@apply grid w-full grid-cols-4   border-b border-b-black-inactive/40 py-3 text-xs hover:text-primary;
+	:nth-child(1) {
+		@apply col-span-2  text-left;
+	}
+
+	.left {
+		@apply col-span-2 flex flex-row items-center justify-start p-0;
+		.icon {
+			@apply mr-4 flex h-8 w-8 items-center justify-center rounded-lg bg-main-bg text-lg;
+		}
+		.information {
+			@apply flex flex-col;
+			.number {
+				@apply m-0 inline-block  text-sm font-semibold;
+			}
+			.destination {
+				@apply mt-2 text-xs text-black-inactive;
+			}
+		}
+	}
+	.right {
+		@apply col-span-2 w-full  text-end font-semibold text-black-inactive;
+	}
+}
+.noBorder {
+	@apply border-none;
+}
+.mirror {
+	transform: scale(-1, 1);
+}

@@ -4,10 +4,10 @@ import React, { FC } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
 import RoutineMachine from './RoutineMachine';
+import RoutingMachine from './RoutineMachine';
 import { IRoute } from '@/data/data';
 
 const Map: FC<{ route: IRoute }> = ({ route }) => {
-	console.log(route);
 	return (
 		<div className='relative'>
 			<MapContainer
@@ -19,7 +19,7 @@ const Map: FC<{ route: IRoute }> = ({ route }) => {
 				className='w-full px-6 mb-4 rounded-lg h-52'
 			>
 				<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-				<RoutineMachine route={route} />
+				<RoutingMachine route={route} />
 			</MapContainer>
 		</div>
 	);

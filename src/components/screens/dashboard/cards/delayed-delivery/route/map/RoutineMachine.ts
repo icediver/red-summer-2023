@@ -64,7 +64,6 @@ const createRoutineMachineLayer = ({ route }: { route: IRoute }) => {
 
 	return instance;
 };
-
 const RoutingMachine = createControlComponent(createRoutineMachineLayer);
 
 export default RoutingMachine;

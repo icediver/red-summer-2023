@@ -1,0 +1,18 @@
+.speedometer {
+	@apply relative flex flex-col text-end;
+	.ellipsis {
+		@apply relative -top-4 left-80  mt-6 flex  h-5 w-6 cursor-pointer justify-end  text-black-inactive  hover:text-primary;
+	}
+	.good {
+		@apply absolute left-1/2 top-1/2 flex h-12 w-12 -translate-y-6 translate-x-2  items-center justify-center rounded-full bg-main-bg text-xl;
+	}
+	> svg {
+		@apply -translate-y-12 translate-x-8;
+	}
+	.footer {
+		@apply flex -translate-y-14 translate-x-8 items-end  justify-between text-xs text-black-inactive;
+		.currentValue {
+			@apply translate-x-1/2 text-2xl font-semibold text-secondary;
+		}
+	}
+}

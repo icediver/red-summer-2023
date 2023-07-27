@@ -19,6 +19,7 @@ export interface IArrivalData {
 	department: string;
 	parcels: IParcel[];
 	category: string;
+	categoryId: number;
 	driver: IDriver;
 }
 export interface IParcel {

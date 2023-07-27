@@ -1,0 +1,29 @@
+.footer {
+	.login {
+		@apply relative my-4 flex flex-row items-center justify-between border-t-8 border-main-bg p-4;
+		.avatar {
+			@apply mr-5 h-10 w-10 overflow-hidden rounded-full;
+		}
+		.name {
+		}
+		.position {
+			@apply text-xs text-black-inactive;
+		}
+		.buttonLoginMenu:hover {
+			> svg {
+				@apply fill-black;
+			}
+		}
+		.popup {
+			@apply absolute -right-1/2 -top-16 flex h-20 w-40 -translate-x-2 flex-col items-start justify-center 
+                    rounded-md bg-white p-4 text-black-inactive;
+			filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.05));
+			button:hover {
+				@apply text-black;
+			}
+			button > svg {
+				@apply my-2 mr-5 inline-block;
+			}
+		}
+	}
+}

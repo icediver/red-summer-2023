@@ -1,0 +1,59 @@
+@keyframes width {
+	from {
+		width: 0;
+	}
+}
+
+.availableItem {
+	@apply grid w-full grid-cols-4   border-b border-b-black-inactive/40 py-3 text-xs hover:text-primary;
+	:nth-child(1) {
+		@apply col-span-2  text-left;
+	}
+
+	.left {
+		@apply flex flex-col justify-start p-0;
+		.number {
+			@apply m-0 inline-block  text-xs font-semibold;
+		}
+		.destination {
+			@apply mt-2 text-xs text-black-inactive;
+		}
+	}
+	.right {
+		@apply col-span-2 w-full  text-end font-semibold;
+		.line {
+			@apply h-2 rounded-xl;
+			animation: width 1.5s ease-in-out;
+		}
+		.red.line {
+			@apply bg-error-color;
+		}
+		.red {
+			@apply text-end text-black-inactive;
+			> span {
+				@apply text-error-color;
+			}
+		}
+		.yellow.line {
+			@apply bg-warning;
+		}
+		.yellow {
+			@apply text-end text-black-inactive;
+			> span {
+				@apply text-warning;
+			}
+		}
+		.green.line {
+			@apply bg-secondary;
+		}
+		.green {
+			@apply text-end text-black-inactive;
+			> span {
+				@apply text-secondary;
+			}
+		}
+	}
+}
+.noBorder {
+	@apply border-none;
+}

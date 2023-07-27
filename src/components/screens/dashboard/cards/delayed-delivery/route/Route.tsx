@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { FC, Ref, useEffect, useState } from 'react';
+import { Dispatch, FC, Ref, SetStateAction, useEffect, useState } from 'react';
 import { FaRegCircle } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { TbMessageCircle2 } from 'react-icons/tb';
@@ -14,10 +14,11 @@ import { IRoute } from '@/data/data';
 import { IArrivalData } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 
 const DynamicMap = dynamic(() => import('./map/Map'), { ssr: false });
-const Route: FC<{ isShow: boolean; shipment: IArrivalData }> = ({
-	isShow,
-	shipment
-}) => {
+const Route: FC<{
+	isShow: boolean;
+	shipment: IArrivalData;
+	setIsShow: Dispatch<SetStateAction<boolean>>;
+}> = ({ isShow, setIsShow, shipment }) => {
 	return (
 		<div
 			className={clsx(styles.route, {
@@ -25,7 +26,7 @@ const Route: FC<{ isShow: boolean; shipment: IArrivalData }> = ({
 				[styles.hide]: !isShow
 			})}
 		>
-			<div className={styles.close}>
+			<div className={styles.close} onClick={() => setIsShow(false)}>
 				<MdClose />
 			</div>
 			<div className={styles.title}>

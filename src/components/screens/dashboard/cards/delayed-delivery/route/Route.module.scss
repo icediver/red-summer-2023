@@ -1,5 +1,5 @@
 .route {
-	@apply absolute right-0 top-0 h-screen  w-1/4  rounded-l-3xl bg-white p-6;
+	@apply absolute right-0 top-0   h-screen  w-1/4 rounded-l-3xl bg-white p-6;
 	.close {
 		@apply flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-bg-color text-black-inactive hover:text-primary;
 	}

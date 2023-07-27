@@ -1,0 +1,21 @@
+.delayed {
+	@apply p-4;
+	.header {
+		@apply mb-3 flex items-center justify-between text-xs;
+		> span {
+			@apply text-sm font-semibold;
+		}
+		> a {
+			@apply text-primary;
+			> svg {
+				@apply mb-0.5 inline-block;
+			}
+		}
+	}
+	.tableHeader {
+		@apply grid grid-cols-2 bg-main-bg py-3 text-xs text-black-inactive;
+		> div {
+			@apply px-3;
+		}
+	}
+}

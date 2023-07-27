@@ -23,9 +23,9 @@ const DelayedDelivery: FC<{ delayed: IArrivalData[] }> = ({ delayed }) => {
 			</div>
 			<div className={styles.tableHeader}>
 				<div>Destination</div>
-				<div>Truck</div>
-				<div>Time arrive</div>
-				<div>Time delay</div>
+				<div className='text-center'>Truck</div>
+				<div className='text-center'>Time arrive</div>
+				<div className='text-center'>Time delay</div>
 			</div>
 			{delayed.map((shipment, index) => {
 				if (index > 2) return;

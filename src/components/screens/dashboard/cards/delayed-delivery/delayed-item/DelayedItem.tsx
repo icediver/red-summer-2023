@@ -45,8 +45,12 @@ const DelayedItem: FC<{
 				})}
 				onClick={() => setIsShowDelay(false)}
 			>
-				<div ref={ref}>
-					<Route isShow={isShowDelay} shipment={shipment} />
+				<div ref={ref} className='z-50' onClick={e => e.stopPropagation()}>
+					<Route
+						isShow={isShowDelay}
+						shipment={shipment}
+						setIsShow={setIsShowDelay}
+					/>
 				</div>
 			</div>
 		</>

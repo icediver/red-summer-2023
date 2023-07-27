@@ -1,0 +1,24 @@
+.dailyPlan {
+	@apply grid grid-cols-3 p-4;
+	.left {
+		@apply flex flex-col;
+		.header {
+			@apply text-xs text-black-inactive;
+			> span {
+				@apply mr-4 text-lg font-semibold text-black;
+			}
+		}
+		.shipments {
+			@apply my-3 text-xs font-semibold text-black-inactive;
+			.value {
+				@apply my-1 text-sm font-semibold text-black-inactive;
+				> span {
+					@apply text-black;
+				}
+			}
+		}
+	}
+	.right {
+		@apply col-span-2 flex items-center justify-center;
+	}
+}
