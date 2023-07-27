@@ -8,11 +8,14 @@
 				.children {
 					@apply h-full overflow-x-hidden rounded-r-2xl bg-main-bg;
 				}
+				.open {
+					@apply rounded-l-2xl;
+				}
 			}
 
 			.collapseButton {
 				@apply absolute left-[20%] top-10 ml-4 h-10 w-10 -translate-x-1/2 rounded-full bg-main-bg p-1.5;
-				transition: all 0.5s ease-in-out;
+				transition: all 0.9s ease;
 				box-shadow: inset 2px 0px 4px rgba(0, 0, 0, 0.05);
 				> button {
 					@apply h-full w-full rounded-full bg-primary-light;

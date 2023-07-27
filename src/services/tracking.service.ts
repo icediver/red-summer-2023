@@ -18,6 +18,7 @@ export interface ISearchParam {
 }
 
 export enum Source {
+	All = 0,
 	Arrival = 1,
 	Available = 2,
 	Departure = 3

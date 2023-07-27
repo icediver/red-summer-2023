@@ -1,0 +1,29 @@
+.delayedItem {
+	@apply grid w-full grid-cols-5   border-b border-b-black-inactive/40 py-3 text-xs hover:text-primary;
+	:nth-child(1) {
+		@apply col-span-2 pl-2 text-left;
+	}
+	.red {
+		@apply mx-auto w-16 rounded bg-error-color/20 py-1 text-center text-error-color;
+	}
+	.yellow {
+		@apply mx-auto w-16 rounded bg-warning/20 py-1  text-center text-warning;
+	}
+}
+.noBorder {
+	@apply border-none;
+}
+.frameRoute {
+	@apply absolute left-0 top-0  h-screen w-screen overflow-hidden;
+	// filter: blur(20px);
+}
+.show {
+	@apply z-10 bg-black/60 opacity-100;
+	backdrop-filter: blur(2px);
+
+	transition: opacity 0.6s ease;
+}
+.hide {
+	@apply -z-50 opacity-0;
+	transition: all 0.9s 0.6s ease;
+}

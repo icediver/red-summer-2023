@@ -19,6 +19,8 @@ export interface IArrivalData {
 	department: string;
 	parcels: IParcel[];
 	category: string;
+	categoryId: number;
+	driver: IDriver;
 }
 export interface IParcel {
 	id: string;
@@ -26,6 +28,13 @@ export interface IParcel {
 	volumeWeight: number;
 	admissionDate: string;
 	truckId: string;
+}
+export interface IDriver {
+	id: number;
+	name: string;
+	phone: string;
+	email: string;
+	avatarPath: string;
 }
 
 export interface IShipmentsTable {

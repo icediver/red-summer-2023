@@ -1,0 +1,34 @@
+.routePoints {
+	@apply my-8 ml-16;
+	.point {
+		@apply flex;
+		.left {
+			@apply mx-8 flex flex-col items-center;
+			.circle {
+				@apply h-4 w-4 rounded-full border-2;
+			}
+			.line {
+				@apply my-2 h-10 w-0.5 bg-black-inactive;
+			}
+		}
+		.right {
+			@apply flex flex-col;
+			.title {
+				@apply text-sm font-semibold;
+			}
+			.status {
+				@apply text-xs text-black-inactive;
+			}
+		}
+	}
+}
+.finished {
+	.circle {
+		@apply border-secondary bg-secondary;
+	}
+}
+.onWay {
+	.circle {
+		@apply border-black-inactive;
+	}
+}

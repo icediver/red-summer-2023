@@ -1,0 +1,12 @@
+.sidebarMenu {
+	@apply mt-10 text-black-inactive;
+	.menuItem {
+		@apply my-4 flex flex-row items-center justify-between;
+		div > svg {
+			@apply mr-3 inline-block;
+		}
+		.notification {
+			@apply h-8 w-8 rounded bg-main-bg p-1.5;
+		}
+	}
+}

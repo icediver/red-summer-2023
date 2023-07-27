@@ -1,0 +1,97 @@
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+@mixin fadeInAnimation($waitTime, $animation) {
+	animation: wait #{$waitTime}, #{$animation} 400ms #{$waitTime};
+	animation-timing-function: ease-in-out;
+}
+@keyframes wait {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+@keyframes fadeInAndTranslate {
+	0% {
+		opacity: 0;
+		transform: translate(-100px, 0);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}
+.dashboard {
+	@apply -mt-2 h-full  overflow-hidden  p-6;
+	.header {
+		@apply mb-4 text-xl  font-semibold;
+	}
+	.topRow {
+		:nth-child(1).package {
+			@include fadeInAnimation('0ms', 'fadeIn');
+		}
+		:nth-child(2).package {
+			@include fadeInAnimation('200ms', 'fadeIn');
+		}
+		:nth-child(3).package {
+			@include fadeInAnimation('400ms', 'fadeIn');
+			.icon {
+				transform: scale(-1, 1);
+			}
+		}
+
+		:nth-child(4).package {
+			@include fadeInAnimation('600ms', 'fadeIn');
+		}
+
+		@apply grid w-full grid-cols-4 gap-4;
+
+		.package {
+			animation: fadeIn 0.8s 0.5s ease-in-out;
+
+			@apply flex h-28 w-full items-center justify-between   rounded-md bg-white p-6 transition-shadow duration-300 hover:shadow-xl;
+
+			.title {
+				@apply text-sm text-black-inactive;
+			}
+			.count {
+				@apply font-bold;
+			}
+			.right {
+				@apply w-1/4;
+				.frame {
+					@apply flex h-12 w-12 items-center justify-center rounded-full bg-main-bg;
+					.icon {
+						@apply text-center text-2xl;
+					}
+				}
+			}
+		}
+	}
+	.container {
+		@apply mt-4 grid h-2/3  w-full grid-cols-2 grid-rows-2 gap-4;
+		.card {
+			@apply w-full rounded-md bg-white transition-shadow duration-300 hover:shadow-xl;
+		}
+		:nth-child(1).card {
+			@include fadeInAnimation('0ms', 'fadeInAndTranslate');
+		}
+		:nth-child(2).card {
+			@include fadeInAnimation('200ms', 'fadeInAndTranslate');
+		}
+		:nth-child(3).card {
+			@include fadeInAnimation('400ms', 'fadeInAndTranslate');
+		}
+
+		:nth-child(4).card {
+			@include fadeInAnimation('600ms', 'fadeInAndTranslate');
+		}
+	}
+}

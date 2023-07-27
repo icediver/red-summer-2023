@@ -2,11 +2,14 @@ import { Parcel, Prisma, PrismaClient } from '@prisma/client';
 import { notFound } from 'next/navigation';
 import { NextResponse } from 'next/server';
 
+import { getDateRange } from '@/shared/data.utils';
+
 import { ISearchTerm } from '../trucks/route';
 
 const prisma = new PrismaClient();
 
 export const ShipmentsService = {
+	//-------------------------READ-------------------------------//
 	async getAll(searchTerm: ISearchTerm) {
 		// console.log('searchTerm', searchTerm);
 		const { sortBy } = searchTerm;
@@ -45,7 +48,7 @@ export const ShipmentsService = {
 				where: prismaSearchTermFilter,
 				orderBy: prismaSort,
 
-				include: { parcels: true }
+				include: { parcels: true, driver: true }
 			});
 			const categoryCount = await prisma.category
 				.findMany({
@@ -70,7 +73,7 @@ export const ShipmentsService = {
 		try {
 			const arrival = await prisma.truck.findUnique({
 				where: { number: trackNumber },
-				include: { parcels: true }
+				include: { parcels: true, driver: true }
 			});
 			return NextResponse.json(arrival);
 		} catch (e) {
@@ -210,6 +213,7 @@ export const ShipmentsService = {
 			console.log(e);
 		}
 	},
+	//--------------------------PARCELS------------------------------//
 	async getAllParcels() {
 		try {
 			const parcels = await prisma.parcel.findMany({});
@@ -232,21 +236,23 @@ export const ShipmentsService = {
 	},
 	async getParcelById(id: number) {
 		try {
-			const arrival = await prisma.parcel.findUnique({
+			const parcel = await prisma.parcel.findUnique({
 				where: { id }
 			});
-			return NextResponse.json(arrival);
+			return NextResponse.json(parcel);
+		} catch (e) {
+			console.log(e);
+		}
+	},
+	//--------------------------DRIVERS------------------------------//
+	async getAllDrivers() {
+		try {
+			const drivers = await prisma.driver.findMany({
+				include: { truck: true }
+			});
+			return NextResponse.json(drivers);
 		} catch (e) {
 			console.log(e);
 		}
 	}
-};
-
-const getDateRange = (date: string) => {
-	const interval = {
-		start: new Date(date.split('T')[0] + 'T00:00:00.000Z'),
-		end: new Date(date.split('T')[0] + 'T23:59:59.000Z')
-	};
-	// console.log('--interval--', interval);
-	return interval;
 };

@@ -1,0 +1,7 @@
+.sidebar {
+	@apply flex h-full w-1/5 flex-col justify-between rounded-l-3xl bg-white;
+	transition: width 0.9s ease;
+}
+.open {
+	@apply w-0 opacity-0;
+}
