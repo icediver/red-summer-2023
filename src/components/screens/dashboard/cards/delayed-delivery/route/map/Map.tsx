@@ -3,8 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import React, { FC } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 
-import RoutineMachine from './RoutineMachine';
-import RoutingMachine from './RoutineMachine';
+import RoutingElement from './RoutingElement';
 import { IRoute } from '@/data/data';
 
 const Map: FC<{ route: IRoute }> = ({ route }) => {
@@ -13,13 +12,12 @@ const Map: FC<{ route: IRoute }> = ({ route }) => {
 			<MapContainer
 				doubleClickZoom={false}
 				id='mapId'
-				zoom={12}
+				zoom={16}
 				center={route.coordinates.to as LatLngExpression}
-				// center={[43.349443523780245, -4.050110679207938]}
 				className='w-full px-6 mb-4 rounded-lg h-52'
 			>
 				<TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-				<RoutingMachine route={route} />
+				<RoutingElement route={route} />
 			</MapContainer>
 		</div>
 	);
