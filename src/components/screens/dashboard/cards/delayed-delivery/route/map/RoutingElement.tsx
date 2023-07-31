@@ -1,8 +1,8 @@
-import L, { LatLng, PathOptions } from 'leaflet';
+import L from 'leaflet';
 import 'leaflet';
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { IRoute } from '@/data/data';
@@ -28,7 +28,7 @@ const emojiTruckIcon = L.divIcon({
 	className: 'custom-div-icon text-3xl -scale-x-100',
 	html: '<div className="" style="transform: scale(-1,1)">🚛</div>',
 	iconSize: [30, 30],
-	iconAnchor: [25, 0]
+	iconAnchor: [15, 15]
 });
 
 const RoutingElement: FC<{ route: IRoute }> = ({ route }) => {
@@ -43,7 +43,7 @@ const RoutingElement: FC<{ route: IRoute }> = ({ route }) => {
 		) {
 			const routingControl = L.Routing.control({
 				lineOptions: {
-					styles: [{ color: '#5AC97F', opacity: 1, weight: 4 }],
+					styles: [{ color: '#7A57E2', opacity: 1, weight: 4 }],
 					extendToWaypoints: true,
 					missingRouteTolerance: 0
 				},
