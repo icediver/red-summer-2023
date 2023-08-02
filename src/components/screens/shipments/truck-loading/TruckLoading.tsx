@@ -45,7 +45,7 @@ const TruckLoading: FC<{
 
 	const { mutateAsync, error } = useMutation(
 		['load in truck'],
-		(parcelsId: number[]) => TruckService.loadParcels(parcelsId, truck.number)
+		(parcelsIds: number[]) => TruckService.loadParcels(parcelsIds, truck.number)
 	);
 
 	return (

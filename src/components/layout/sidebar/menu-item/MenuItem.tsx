@@ -10,7 +10,7 @@ import styles from './MenuItem.module.scss';
 const MenuItem: FC<IMenuItem> = ({ title, Icon, notification = 0, route }) => {
 	const pathname = usePathname();
 	useEffect(() => {
-		console.log(pathname);
+		// console.log(pathname);
 	}, [pathname]);
 	return (
 		<Link

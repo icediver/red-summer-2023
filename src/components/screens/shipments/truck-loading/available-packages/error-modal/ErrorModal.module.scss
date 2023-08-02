@@ -7,8 +7,7 @@
 	}
 }
 .errorModal {
-	@apply absolute left-1/2 top-1/2 z-30 flex h-[200px] w-[400px]  -translate-x-1/2 -translate-y-1/2 flex-col items-center
-    justify-center rounded-md border border-black-inactive/40 bg-main-bg shadow-lg;
+	@apply absolute left-1/2 top-1/2 z-30 flex h-[200px] w-[400px]  -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-md border border-black-inactive/40 bg-main-bg shadow-lg;
 	.message {
 		@apply text-sm;
 		> svg {
