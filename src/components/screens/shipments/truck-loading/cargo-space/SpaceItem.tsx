@@ -19,7 +19,6 @@ const SpaceItem: FC<{
 
 	useEffect(() => setIsStatusActive(space), []);
 
-	console.log(space);
 	return (
 		<div
 			className={styles[isStatusActive]}

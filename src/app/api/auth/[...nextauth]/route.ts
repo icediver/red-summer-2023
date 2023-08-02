@@ -1,14 +1,10 @@
 import NextAuth, { NextAuthOptions } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import VkProvider from 'next-auth/providers/vk';
 import YandexProvider from 'next-auth/providers/yandex';
 
-import { IUser, ISession, IJwt, ISessionWithToken } from '../session.interface';
-
-export const authOptions: NextAuthOptions = {
-	// Configure one or more authentication providers
+const authOptions: NextAuthOptions = {
 	providers: [
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID as string,

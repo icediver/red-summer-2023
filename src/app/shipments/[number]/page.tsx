@@ -25,10 +25,9 @@ export async function generateStaticParams() {
 	return paths;
 }
 
-export async function getData(number: string) {
+async function getData(number: string) {
 	try {
 		const { data } = await TruckService.getAvailableByNumber(String(number));
-		// const { data } = await TrackingService.getAvailableByNumber(String(number));
 		const { data: packages } = await TruckService.getAvailablePackages();
 		return {
 			props: {

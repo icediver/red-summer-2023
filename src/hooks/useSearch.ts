@@ -2,8 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { OnChangeValue } from 'react-select';
 
+import { IOption } from '@/ui/select-filters/select.types';
+
 import { useDebounce } from './useDebounce';
-import { IOption } from '@/data/cities';
 import { Source, TrackingService } from '@/services/tracking.service';
 
 type TypeSourceData = 'Arrival' | 'Available' | 'Departure';
