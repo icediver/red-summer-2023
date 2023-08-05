@@ -1,11 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-
 import Layout from '@/components/layout/layout/Layout';
 
 import TruckLoading from '@/screens/shipments/truck-loading/TruckLoading';
 import { TruckService } from '@/services/trucks.service';
-
-const prisma = new PrismaClient();
 
 export default async function Page({
 	params: { number }
@@ -20,19 +16,13 @@ export default async function Page({
 	);
 }
 export async function generateStaticParams() {
-	try {
-		const shipments = await prisma.truck.findMany({
-			where: { categoryId: 2 }
-		});
-		const paths = shipments?.map(a => ({
-			params: { number: String(a.number) }
-		}));
+	const { data } = await TruckService.getAll({ category: '2' });
 
-		return paths;
-	} catch (e) {
-		console.log(e);
-		return [];
-	}
+	const paths = data?.shipments?.map(a => ({
+		params: { number: String(a.number) }
+	}));
+
+	return paths;
 }
 
 async function getData(number: string) {
