@@ -5,9 +5,9 @@ const prisma = new PrismaClient();
 
 async function main() {
 	console.log('Start seeding ...');
-	createDrivers(100);
+	// createDrivers(100);
 	// await createParcels(200);
-	// await createTrucks(50);
+	await createTrucks(20);
 }
 const createParcels = async (length: number) => {
 	const parcels: Parcel[] = [];
@@ -69,7 +69,7 @@ function createTruck() {
 		department: faker.number.int({ min: 1, max: 6 }),
 		capacity: faker.helpers.arrayElement([200, 300, 400]),
 		destination: `${fakerES.location.city()} - ${fakerES.location.city()}`,
-		categoryId: 3
+		categoryId: 2
 	};
 }
 

@@ -8,10 +8,11 @@
 		"start": "next start",
 		"lint": "next lint",
 		"seed": "ts-node  prisma/seed.ts",
-		"eslint": "npx eslint 'src/**/*.{js,jsx,ts,tsx}'"
+		"eslint": "npx eslint 'src/**/*.{js,jsx,ts,tsx}'",
+		"db-seed": "tsc prisma/seed.ts && cat prisma/seed.js | node --input-type=\"commonjs\" && rm prisma/seed.js"
 	},
 	"prisma": {
-		"seed": "ts-node -O {\"module\":\"CommonJS\"} prisma/seed.ts"
+		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	},
 	"dependencies": {
 		"@seald-io/nedb": "^4.0.2",
@@ -53,7 +54,7 @@
 		"eslint-config-prettier": "^8.8.0",
 		"prettier": "^2.8.8",
 		"prettier-plugin-tailwindcss": "^0.3.0",
-		"prisma": "^5.0.0"
+		"prisma": "^5.1.1"
 	},
 	"packageManager": "yarn@3.6.1"
 }
