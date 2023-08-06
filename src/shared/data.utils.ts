@@ -91,7 +91,10 @@ export const getDateRange = (date: string) => {
 
 export const getCoordinates = (route: string) => {
 	const city = route.split(' - ')[1].toLowerCase();
-	const coordinates = shipmentsRoutes.filter(route => route.city === city);
+	const coordinates = shipmentsRoutes.filter(
+		route => route.city.toLowerCase() === city
+	);
+	console.log(city, coordinates);
 
 	return coordinates;
 };
