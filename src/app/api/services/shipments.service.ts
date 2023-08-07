@@ -223,16 +223,13 @@ export const ShipmentsService = {
 		}
 	},
 	async getAvailableParcels() {
-		try {
-			const parcels = await prisma.parcel.findMany({
-				where: {
-					truckId: { equals: null }
-				}
-			});
-			return NextResponse.json(parcels);
-		} catch (e) {
-			throw new Error('Not found');
-		}
+		const parcels = await prisma.parcel.findMany({
+			where: {
+				truckId: { equals: null }
+			}
+		});
+
+		return parcels;
 	},
 	async getParcelById(id: number) {
 		try {
