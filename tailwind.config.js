@@ -20,6 +20,7 @@ module.exports = {
         './pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/**/*.{js,ts,jsx,tsx,mdx}',
     ],
+    purge: ['./src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         colors,
         extend: {
