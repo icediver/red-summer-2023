@@ -3,15 +3,11 @@ import Link from 'next/link';
 import { FC, useState } from 'react';
 import { BiChevronRight } from 'react-icons/bi';
 
-import { useOutside } from '@/hooks/useOutside';
-
 import styles from './DelayedDelivery.module.scss';
 import DelayedItem from './delayed-item/DelayedItem';
-import Route from './route/Route';
 import { IArrivalData } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 
 const DelayedDelivery: FC<{ delayed: IArrivalData[] }> = ({ delayed }) => {
-	// const [isShowDelay, setIsShowDelay] = useState<boolean>(false);
 	return (
 		<div className={styles.delayed}>
 			<div className={styles.header}>

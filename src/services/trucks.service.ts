@@ -10,7 +10,6 @@ import {
 	IShipmentsData
 } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
-import { IAvailablePackage } from '@/screens/shipments/truck-loading/available-package.interface';
 
 export interface ISearchParam {
 	searchTerm?: string;
