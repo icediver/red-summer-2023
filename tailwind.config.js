@@ -1,9 +1,13 @@
 /** @type {import('tailwindcss').Config} */
-const twColors = require('tailwindcss/colors')
+import {
+	transparent as _transparent,
+	white as _white
+} from 'tailwindcss/colors';
+
 
 const colors = {
-    transparent: twColors.transparent,
-    white: twColors.white,
+    transparent: _transparent,
+    white: _white,
     black: '#484855',
     'black-inactive': '#C2C6CF',
     primary: '#7A57E2',
