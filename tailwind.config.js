@@ -21,6 +21,7 @@ module.exports = {
         './src/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     purge: ['./src/**/*.{js,ts,jsx,tsx}'],
+    important: true,
     theme: {
         colors,
         extend: {
