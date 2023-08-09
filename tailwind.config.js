@@ -20,7 +20,7 @@ const colors = {
     warning: '#F1D399',
 }
 module.exports = {
-    content: ['./src/**/*.{js,ts,jsx,tsx}'],
+    content: ['./src/**/*.{js,ts,jsx,tsx,scss}'],
     important: true,
     theme: {
         colors,
