@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import { FC } from 'react';
 
 import styles from './AvailableItem.module.scss';
@@ -17,7 +18,8 @@ const AvailableItem: FC<{
 		availableSpace < 30 ? 'green' : availableSpace < 60 ? 'yellow' : 'red';
 	return (
 		<>
-			<button
+			<Link
+				href={`/shipments/${shipment.number}`}
 				className={clsx(styles.availableItem, {
 					[styles.noBorder]: index === 2
 				})}
@@ -37,7 +39,7 @@ const AvailableItem: FC<{
 						}}
 					/>
 				</div>
-			</button>
+			</Link>
 		</>
 	);
 };

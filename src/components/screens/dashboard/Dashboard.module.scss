@@ -31,7 +31,7 @@
 .dashboard {
 	@apply -mt-2 h-full  overflow-hidden  p-6;
 	.header {
-		@apply mb-4 text-xl  font-semibold;
+		@apply mb-6 text-xl  font-semibold;
 	}
 	.topRow {
 		:nth-child(1).package {
@@ -76,9 +76,9 @@
 		}
 	}
 	.container {
-		@apply mt-4 grid h-2/3  w-full grid-cols-2 grid-rows-2 gap-4;
+		@apply mt-4 grid h-[68%]  w-full grid-cols-2 grid-rows-2 gap-6;
 		.card {
-			@apply w-full rounded-md bg-white transition-shadow duration-300 hover:shadow-xl;
+			@apply w-full rounded-md bg-white p-4 transition-shadow duration-300 hover:shadow-xl;
 		}
 		:nth-child(1).card {
 			@include fadeInAnimation('0ms', 'fadeInAndTranslate');

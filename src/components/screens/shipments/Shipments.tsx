@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import SearchTracking from '@/ui/search-tracking/SearchTracking';
 import SelectFilters from '@/ui/select-filters/SelectFilters';
@@ -26,7 +26,9 @@ import { Source, TrackingService } from '@/services/tracking.service';
 
 export type ShipmentsType = IArrivalData | ICardShipment;
 
-const Shipments: FC = () => {
+const Shipments: FC<{ category?: Source }> = ({
+	category = Source.Arrival
+}) => {
 	const {
 		activeCategory,
 		setActiveCategory,
@@ -38,11 +40,16 @@ const Shipments: FC = () => {
 		searchParamsWithDebounce
 	} = useSearchParams();
 
+	console.log(category);
+
 	const { isSuccess, data } = useQuery(
 		['get shipments', searchParamsWithDebounce],
 		() => TrackingService.getArrival(searchParamsWithDebounce),
 		{ select: ({ data }) => data }
 	);
+	useEffect(() => setActiveCategory(category), []);
+
+	console.log(data);
 
 	const dates = getDates(data?.shipments || []);
 	const sort = getSortKeys(data?.shipments || []);

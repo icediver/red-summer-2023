@@ -1,9 +1,8 @@
 .delayed {
-	@apply p-4;
 	.header {
 		@apply mb-3 flex items-center justify-between text-xs;
 		> span {
-			@apply text-sm font-semibold;
+			@apply text-base font-semibold;
 		}
 		> a {
 			@apply text-primary;

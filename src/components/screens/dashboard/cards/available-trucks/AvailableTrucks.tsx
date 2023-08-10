@@ -12,7 +12,7 @@ const AvailableTrucks: FC<{ available: IArrivalData[] }> = ({ available }) => {
 		<div className={styles.delayed}>
 			<div className={styles.header}>
 				<span>Available trucks</span>
-				<Link href={'/shipments'}>
+				<Link href={'/shipments/available'}>
 					Show all
 					<BiChevronRight size={16} />
 				</Link>
