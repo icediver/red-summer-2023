@@ -5,7 +5,7 @@
 }
 
 .availableItem {
-	@apply grid w-full grid-cols-4   border-b border-b-black-inactive/40 py-3 text-xs hover:text-primary;
+	@apply grid w-full grid-cols-4   border-b border-b-black-inactive/40 py-2.5 text-xs hover:text-primary;
 	:nth-child(1) {
 		@apply col-span-2  text-left;
 	}
@@ -16,7 +16,7 @@
 			@apply m-0 inline-block  text-xs font-semibold;
 		}
 		.destination {
-			@apply mt-2 text-xs text-black-inactive;
+			@apply mt-1 text-xs text-black-inactive;
 		}
 	}
 	.right {

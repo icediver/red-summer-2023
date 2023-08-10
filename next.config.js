@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	env: {
-		SERVER_URL: process.env.SERVER_URL
+		SERVER_URL: process.env.SERVER_URL,
+		GEOCODER: process.env.GEOCODER_URL
 	},
 	images: {
 		domains: [

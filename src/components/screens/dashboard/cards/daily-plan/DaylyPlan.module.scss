@@ -5,7 +5,7 @@
 		.header {
 			@apply text-xs text-black-inactive;
 			> span {
-				@apply mr-4 text-lg font-semibold text-black;
+				@apply mr-4 text-base font-semibold text-black;
 			}
 		}
 		.shipments {

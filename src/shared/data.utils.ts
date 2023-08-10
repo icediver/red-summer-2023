@@ -7,6 +7,8 @@ import {
 	IShipmentsData
 } from '@/screens/shipments/arrival-tab/arrival-tab.interface';
 import { ICardShipment } from '@/screens/shipments/available-tab/card-shipment/card-shipment.interface';
+import { IRouteCoordinates } from '@/services/geocoder.interface';
+import { GeocoderService } from '@/services/geocoder.service';
 
 export function getDates<T>(data: T[]) {
 	const arrivalDateLabel = [
@@ -14,13 +16,7 @@ export function getDates<T>(data: T[]) {
 			data.map((el: any) => {
 				if (el['arrivalDate'] !== undefined) {
 					return el['arrivalDate'].split('T')[0];
-					// return new Date(el['arrivalDate']).toLocaleString('en-Us', {
-					// 	day: 'numeric',
-					// 	month: 'short',
-					// 	year: 'numeric'
-					// });
 				}
-				// if (el.departure !== undefined) return el.departure.split(',')[0];
 			})
 		)
 	];
@@ -89,12 +85,23 @@ export const getDateRange = (date: string) => {
 	return interval;
 };
 
-export const getCoordinates = (route: string) => {
-	const city = route.split(' - ')[1].toLowerCase();
-	const coordinates = shipmentsRoutes.filter(
-		route => route.city.toLowerCase() === city
+export async function getCoordinates(route: string) {
+	const cities = route.split(' - ');
+	const departure = cities[0].toLowerCase();
+	const destination = cities[1].toLowerCase();
+	const departureCoordinates = await GeocoderService.getCoordinates(departure);
+	const destinationCoordinates = await GeocoderService.getCoordinates(
+		destination
 	);
-	console.log(city, coordinates);
 
-	return coordinates;
-};
+	return {
+		departure: {
+			name: departure,
+			coordinates: departureCoordinates || { lat: 0, lng: 0 }
+		},
+		destination: {
+			name: destination,
+			coordinates: destinationCoordinates || { lat: 0, lng: 0 }
+		}
+	};
+}

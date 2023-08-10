@@ -6,6 +6,7 @@ import { FC, useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { IRoute } from '@/data/data';
+import { IRouteCoordinates } from '@/services/geocoder.interface';
 
 const greenIcon = new L.Icon({
 	iconUrl:
@@ -31,15 +32,15 @@ const emojiTruckIcon = L.divIcon({
 	iconAnchor: [15, 15]
 });
 
-const RoutingElement: FC<{ route: IRoute }> = ({ route }) => {
+const RoutingElement: FC<{ route: IRouteCoordinates }> = ({ route }) => {
 	const map = useMap();
 
 	useEffect(() => {
 		if (!map) return;
 
 		if (
-			route.coordinates.from !== undefined &&
-			route.coordinates.to !== undefined
+			route.departure.coordinates !== undefined &&
+			route.destination.coordinates !== undefined
 		) {
 			const routingControl = L.Routing.control({
 				lineOptions: {
@@ -56,8 +57,8 @@ const RoutingElement: FC<{ route: IRoute }> = ({ route }) => {
 				showAlternatives: false,
 				plan: new L.Routing.Plan(
 					[
-						L.latLng(route.coordinates.from[0], route.coordinates.from[1]),
-						L.latLng(route.coordinates.to[0], route.coordinates.to[1])
+						L.latLng(route.departure.coordinates || [0, 0]),
+						L.latLng(route.destination.coordinates || [0, 0])
 					],
 					{
 						createMarker: function (

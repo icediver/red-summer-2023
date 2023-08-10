@@ -1,9 +1,8 @@
 .delayed {
-	@apply p-4;
 	.header {
-		@apply mb-3 flex items-center justify-between text-xs;
+		@apply my-4 flex items-center justify-between text-xs;
 		> span {
-			@apply text-sm font-semibold;
+			@apply text-base font-semibold;
 		}
 		> a {
 			@apply text-primary;
@@ -13,7 +12,6 @@
 		}
 	}
 	.tableHeader {
-		@apply grid grid-cols-2 bg-main-bg py-3 text-xs text-black-inactive;
 		> div {
 			@apply px-3;
 		}
