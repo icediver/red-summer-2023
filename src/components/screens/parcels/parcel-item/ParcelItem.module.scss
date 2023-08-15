@@ -1,0 +1,16 @@
+.container {
+	@apply z-10 mx-auto grid w-2/3 grid-cols-3 border-b border-black-inactive/60 px-2 py-3 text-sm;
+	.parcelNumber {
+		@apply flex;
+		> input {
+			@apply z-20 mr-2;
+		}
+	}
+
+	.weight {
+		@apply mr-16 text-end;
+	}
+}
+.selected {
+	@apply font-semibold;
+}

@@ -1,11 +1,11 @@
 import Layout from '@/layout/layout/Layout';
 
-import Dashboard from '@/screens/dashboard/Dashboard';
+import Parcels from '@/screens/parcels/Parcels';
 
 export default function ParcelsPage() {
 	return (
 		<Layout>
-			<div>Parcels</div>
+			<Parcels />
 		</Layout>
 	);
 }

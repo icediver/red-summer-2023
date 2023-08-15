@@ -9,7 +9,6 @@ import truckImage from '@/assets/images/track.png';
 import { IArrivalData } from '../../arrival-tab/arrival-tab.interface';
 
 import styles from './CardShipment.module.scss';
-import { ICardShipment, IItemsCardShipment } from './card-shipment.interface';
 
 const CardShipment: FC<IArrivalData> = ({
 	destination,
