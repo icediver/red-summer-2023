@@ -6,7 +6,7 @@ const Clock: FC = () => {
 		setInterval(() => setDateState(new Date()), 1000);
 	}, []);
 	return (
-		<div className='w-40 text-sm font-normal'>
+		<div className='w-40 text-xs font-normal'>
 			<span>
 				{dateState.toLocaleDateString('en-US', {
 					weekday: 'short',
